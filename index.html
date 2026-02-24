@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050d1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Scripting: Proficiency Guide — Job-Ready Edition</title>
+<link rel="manifest" href="#" id="manifest-link">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+:root{
+  --n950:#020810;--n900:#050d1a;--n850:#091424;--n800:#0d1c30;
+  --n750:#112540;--n700:#162e52;--n600:#1e3f70;--n500:#2a5498;
+  --n400:#3d6db8;--n300:#6090d0;--n200:#96b8e8;--n150:#b8d0f0;--n50:#eef4fc;
+  --bg:var(--n900);--bg-deep:var(--n950);--surface:var(--n850);--surface2:var(--n800);--border:var(--n700);
+  --tp:var(--n50);--ts:var(--n200);--tt:var(--n300);--td:var(--n400);
+  --glow:rgba(61,109,184,.35);--ghi:rgba(96,144,208,.5);
+  --fd:'Playfair Display',Georgia,serif;--fm:'IBM Plex Mono','Courier New',monospace;
+  --xs:.694rem;--sm:.875rem;--md:1rem;--lg:1.333rem;--xl:1.777rem;--xxl:2.369rem;
+  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:40px;
+  --sh:0 1px 4px rgba(2,8,16,.6),0 0 0 1px rgba(22,46,82,.4);
+  --shg:0 0 0 1px var(--n600),0 0 16px var(--glow);
+  --rm:4px;--rmd:8px;--rl:12px;--nav:72px;--tr:180ms cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{font-family:var(--fm);font-size:var(--md);color:var(--tp);background:var(--bg);min-height:100vh;padding-bottom:var(--nav);line-height:1.65;}
+button,select,input,textarea{font-family:inherit;}
+:focus-visible{outline:2px solid var(--n300);outline-offset:3px;border-radius:var(--rm);}
+
+/* ── PAGES ── */
+.page{display:none;flex-direction:column;gap:var(--s3);padding:var(--s4) var(--s3);max-width:720px;margin:0 auto;}
+.page.active{display:flex;animation:pgIn 220ms ease;}
+@keyframes pgIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── HERO ── */
+.hero{position:relative;padding-bottom:var(--s3);border-bottom:1px solid var(--border);}
+.hero__bg{font-family:var(--fd);font-size:6.5rem;font-weight:900;line-height:1;color:var(--n800);position:absolute;right:0;top:-4px;user-select:none;pointer-events:none;letter-spacing:-.04em;}
+.hero__eye{font-family:var(--fm);font-size:var(--xs);font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--tt);margin-bottom:var(--s1);}
+.hero__h{font-family:var(--fd);font-size:var(--xxl);font-weight:900;letter-spacing:-.02em;line-height:1.05;position:relative;z-index:1;}
+.hero__sub{font-family:var(--fm);font-size:var(--sm);font-weight:300;line-height:1.75;color:var(--ts);margin-top:var(--s1);max-width:480px;}
+
+/* ── SECTION ── */
+.sec{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:var(--s3);position:relative;overflow:hidden;}
+.sec::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--n600),transparent);}
+.sec__hd{margin-bottom:var(--s2);padding-bottom:var(--s2);border-bottom:1px solid var(--border);display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2);}
+.sec__title{font-family:var(--fd);font-size:var(--lg);font-weight:700;color:var(--tp);}
+.sec__sub{font-family:var(--fm);font-size:var(--xs);color:var(--td);letter-spacing:.08em;text-transform:uppercase;flex-shrink:0;}
+
+/* ── PROGRESS ── */
+.pc{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:var(--s3);display:flex;gap:var(--s3);align-items:center;position:relative;overflow:hidden;}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--n500),var(--n300),transparent);}
+.pc__pct{font-family:var(--fd);font-size:var(--xxl);font-weight:900;color:var(--tp);line-height:1;flex-shrink:0;letter-spacing:-.03em;}
+.pc__meta{flex:1;min-width:0;}
+.pc__lbl{font-family:var(--fm);font-size:var(--xs);text-transform:uppercase;letter-spacing:.15em;color:var(--td);margin-bottom:8px;}
+.pt{height:3px;background:var(--n750);border-radius:99px;overflow:hidden;}
+.pf{height:100%;background:linear-gradient(90deg,var(--n500),var(--n300));border-radius:99px;transition:width 500ms cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px var(--ghi);}
+
+/* ── CAREER METER ── */
+.career-bar{background:var(--n800);border:1px solid var(--n700);border-radius:var(--rmd);padding:var(--s2);margin-bottom:var(--s2);}
+.career-bar__label{font-family:var(--fm);font-size:var(--xs);color:var(--td);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;display:flex;justify-content:space-between;}
+.career-bar__track{height:8px;background:var(--n750);border-radius:99px;overflow:hidden;}
+.career-bar__fill{height:100%;border-radius:99px;transition:width 600ms cubic-bezier(.4,0,.2,1);}
+
+/* ── LANG TABS ── */
+.ltabs{display:flex;gap:var(--s1);margin-bottom:var(--s1);}
+.ltab{flex:1;min-height:34px;font-family:var(--fm);font-size:var(--xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--border);border-radius:var(--rm);background:transparent;color:var(--td);cursor:pointer;transition:all var(--tr);}
+.ltab.active{background:var(--n700);border-color:var(--n500);color:var(--n150);box-shadow:0 0 12px var(--glow);}
+.lpanel{display:none;}
+.lpanel.active{display:block;}
+
+/* ── CODE BLOCK ── */
+.cb{background:var(--bg-deep);border:1px solid var(--n700);border-radius:var(--rmd);padding:var(--s2);font-family:var(--fm);font-size:var(--xs);color:var(--n200);line-height:1.95;overflow-x:auto;margin:var(--s1) 0;}
+.cb .k{color:var(--n300);}
+.cb .s{color:var(--n150);}
+.cb .c{color:var(--n600);}
+.cb .f{color:var(--n200);}
+.cb .n{color:var(--n300);}
+.cb .cm{color:var(--n500);font-style:italic;}
+
+/* ── CALLOUT ── */
+.callout{background:var(--n800);border-left:3px solid var(--n500);border-radius:0 var(--rmd) var(--rmd) 0;padding:var(--s2);margin:var(--s2) 0;}
+.callout p{font-family:var(--fm);font-size:var(--sm);color:var(--ts);line-height:1.75;}
+.callout strong{color:var(--tp);font-weight:600;}
+
+/* ── INTERVIEW BOX ── */
+.interview{background:var(--n750);border:1px solid var(--n600);border-radius:var(--rmd);padding:var(--s2);margin:var(--s2) 0;}
+.interview__label{font-family:var(--fm);font-size:var(--xs);font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--n400);margin-bottom:6px;}
+.interview__q{font-family:var(--fm);font-size:var(--sm);color:var(--ts);line-height:1.7;margin-bottom:var(--s1);}
+
+/* ── EXERCISE ── */
+.ex{background:var(--n800);border:1px solid var(--n700);border-radius:var(--rmd);padding:var(--s2);margin-top:var(--s2);}
+.ex__lbl{font-family:var(--fm);font-size:var(--xs);font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--n400);margin-bottom:var(--s1);}
+.ex__q{font-family:var(--fm);font-size:var(--sm);color:var(--ts);margin-bottom:var(--s2);line-height:1.7;}
+.ex__reveal{display:none;margin-top:var(--s2);border-top:1px solid var(--border);padding-top:var(--s2);}
+.ex__reveal.open{display:block;}
+.ex__albl{font-family:var(--fm);font-size:var(--xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--n300);margin-bottom:var(--s1);}
+
+/* ── COLLAPSIBLE ── */
+.ct{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;padding:var(--s2);min-height:44px;text-align:left;border-radius:var(--rmd);transition:background var(--tr);color:var(--tp);}
+.ct:hover{background:var(--n800);}
+.ct .chv{width:16px;height:16px;flex-shrink:0;transition:transform var(--tr);color:var(--td);}
+.ct.open .chv{transform:rotate(180deg);}
+.cbody{overflow:hidden;max-height:0;transition:max-height 380ms cubic-bezier(.4,0,.2,1);}
+.cbody.open{max-height:12000px;}
+.ccontent{padding:0 var(--s2) var(--s2);}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s1);min-height:44px;padding:0 var(--s3);font-family:var(--fm);font-size:var(--xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:var(--rmd);cursor:pointer;transition:all var(--tr);user-select:none;white-space:nowrap;}
+.btn-p{background:var(--n500);color:var(--n50);border:1px solid var(--n400);box-shadow:0 0 20px rgba(42,84,152,.3);}
+.btn-p:hover{background:var(--n400);box-shadow:0 0 32px rgba(42,84,152,.5);transform:translateY(-1px);}
+.btn-g{background:transparent;color:var(--ts);border:1px solid var(--border);}
+.btn-g:hover{background:var(--surface2);border-color:var(--n500);color:var(--tp);}
+.btn-r{background:var(--n700);color:var(--n150);border:1px solid var(--n600);min-height:36px;}
+.btn-r:hover{background:var(--n600);color:var(--n50);}
+.btn-d{background:transparent;color:#f87171;border:1px solid rgba(248,113,113,.3);}
+.btn-d:hover{background:rgba(248,113,113,.08);border-color:#f87171;}
+
+/* ── TAG / BADGE ── */
+.tag{display:inline-flex;align-items:center;padding:3px 10px;font-family:var(--fm);font-size:var(--xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;background:var(--n750);color:var(--n300);border:1px solid var(--n600);}
+.tb{background:var(--n800);color:var(--n200);border-color:var(--n600);}
+.ti{background:var(--n700);color:var(--n150);border-color:var(--n500);}
+.ta{background:var(--n500);color:var(--n50);border-color:var(--n400);}
+.badge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:9px;font-weight:700;border-radius:50%;background:var(--n400);color:var(--n50);}
+
+/* ── TOGGLE ── */
+.tog{width:40px;height:22px;border-radius:99px;background:var(--n750);border:1px solid var(--n600);cursor:pointer;position:relative;transition:background var(--tr);padding:0;}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--n400);transition:transform var(--tr),background var(--tr);}
+.tog.on{background:var(--n500);border-color:var(--n400);}
+.tog.on::after{transform:translateX(18px);background:var(--n50);}
+
+/* ── SKILL DOTS ── */
+.sdots{display:flex;gap:3px;}
+.sd{width:7px;height:7px;border-radius:1px;background:var(--n750);border:1px solid var(--n700);transition:background var(--tr);}
+.sd.on{background:var(--n400);border-color:var(--n300);box-shadow:0 0 4px var(--glow);}
+
+/* ── FORM ── */
+.textarea{width:100%;min-height:130px;padding:10px var(--s2);font-family:var(--fm);font-size:var(--sm);color:var(--tp);background:var(--bg-deep);border:1px solid var(--n700);border-radius:var(--rmd);resize:vertical;line-height:1.7;transition:border-color var(--tr),box-shadow var(--tr);}
+.textarea::placeholder{color:var(--n600);}
+.textarea:focus{outline:none;border-color:var(--n400);box-shadow:0 0 0 3px rgba(42,84,152,.2);}
+.sel-w{position:relative;}
+.sel-w::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--n300);pointer-events:none;}
+.sel{width:100%;min-height:44px;padding:0 44px 0 var(--s2);font-family:var(--fm);font-size:var(--sm);color:var(--tp);background:var(--bg-deep);border:1px solid var(--n700);border-radius:var(--rmd);appearance:none;cursor:pointer;transition:all var(--tr);}
+.sel:focus{outline:none;border-color:var(--n400);box-shadow:0 0 0 3px rgba(42,84,152,.2);}
+.sel option{background:var(--n850);}
+.tinput{width:100%;min-height:44px;padding:10px var(--s2);font-family:var(--fm);font-size:var(--sm);color:var(--tp);background:var(--bg-deep);border:1px solid var(--n700);border-radius:var(--rmd);transition:all var(--tr);}
+.tinput:focus{outline:none;border-color:var(--n400);box-shadow:0 0 0 3px rgba(42,84,152,.2);}
+.tinput::placeholder{color:var(--n600);}
+
+/* ── OUTPUT ── */
+.out{background:var(--bg-deep);border:1px solid var(--n700);border-radius:var(--rmd);padding:var(--s2);font-family:var(--fm);font-size:var(--xs);color:var(--td);min-height:90px;white-space:pre-wrap;line-height:1.9;}
+.out.ok{border-color:var(--n500);color:var(--n200);box-shadow:0 0 16px rgba(42,84,152,.2);}
+.out.err{border-color:rgba(248,113,113,.4);color:#fca5a5;}
+
+/* ── LOG GRID ── */
+.lg{display:grid;grid-template-columns:26px 1fr auto auto;gap:0 var(--s2);align-items:center;}
+.lgh>*{font-family:var(--fm);font-size:var(--xs);font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--td);padding-bottom:var(--s1);border-bottom:1px solid var(--n700);}
+.lgr>*{padding:7px 0;border-bottom:1px solid var(--n850);font-family:var(--fm);font-size:var(--xs);color:var(--ts);}
+
+/* ── MODAL ── */
+.mov{display:none;position:fixed;inset:0;background:rgba(2,8,16,.85);backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center;padding:var(--s3);}
+.mov.open{display:flex;}
+.modal{background:var(--n800);border:1px solid var(--n600);border-radius:var(--rl);padding:var(--s4);max-width:380px;width:100%;animation:mIn 200ms ease;}
+@keyframes mIn{from{transform:scale(.92);opacity:0;}to{transform:scale(1);opacity:1;}}
+.modal h2{font-family:var(--fd);font-size:var(--xl);font-weight:700;color:var(--tp);margin-bottom:var(--s1);}
+.modal p{font-family:var(--fm);font-size:var(--sm);color:var(--ts);margin-bottom:var(--s3);line-height:1.7;}
+.macts{display:flex;gap:var(--s1);justify-content:flex-end;}
+
+/* ── SELF EVAL ── */
+.se{display:flex;align-items:center;gap:8px;margin-top:var(--s1);}
+.se input[type=checkbox]{width:15px;height:15px;accent-color:var(--n400);cursor:pointer;}
+.se label{font-family:var(--fm);font-size:var(--xs);color:var(--td);cursor:pointer;}
+
+/* ── SELF EVAL INLINE ── */
+.check-inline{display:flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--fm);font-size:var(--xs);color:var(--td);}
+.check-inline input{width:14px;height:14px;accent-color:var(--n400);cursor:pointer;}
+
+/* ── NAV ── */
+.bnav{position:fixed;bottom:0;left:0;right:0;height:var(--nav);background:rgba(5,13,26,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--n700);box-shadow:0 -8px 40px rgba(2,8,16,.8);display:flex;align-items:center;justify-content:space-around;z-index:100;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:44px;cursor:pointer;background:none;border:none;border-top:2px solid transparent;transition:border-color var(--tr);}
+.ni.active{border-top-color:var(--n300);}
+.ni__iw{width:38px;height:28px;border-radius:var(--rm);display:flex;align-items:center;justify-content:center;transition:background var(--tr),box-shadow var(--tr);}
+.ni.active .ni__iw{background:var(--n700);box-shadow:0 0 12px var(--glow);}
+.ni svg{width:24px;height:24px;color:var(--n600);transition:color var(--tr);}
+.ni.active svg{color:var(--n200);}
+.ni__l{font-family:var(--fm);font-size:8px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--n600);transition:color var(--tr);}
+.ni.active .ni__l{color:var(--n200);}
+
+/* ── UTILS ── */
+.mt1{margin-top:var(--s1);}.mt2{margin-top:var(--s2);}.mt3{margin-top:var(--s3);}
+.mb1{margin-bottom:var(--s1);}.mb2{margin-bottom:var(--s2);}
+.fbt{display:flex;align-items:center;justify-content:space-between;}
+.fg1{display:flex;align-items:center;gap:var(--s1);}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ PAGE 1 — OVERVIEW ════════════════════════════ -->
+<main id="page-overview" class="page active" role="main">
+  <div class="hero">
+    <div class="hero__bg" aria-hidden="true">01</div>
+    <p class="hero__eye">Job-Ready Edition</p>
+    <h1 class="hero__h">Scripting<br>Proficiency</h1>
+    <p class="hero__sub">Everything you need to get hired as a developer or automation engineer — Python & Node.js, from zero to job-ready.</p>
+  </div>
+
+  <div class="pc">
+    <div class="pc__pct" id="gPct">0%</div>
+    <div class="pc__meta">
+      <div class="pc__lbl">Job Readiness</div>
+      <div class="pt"><div class="pf" id="gBar" style="width:0%"></div></div>
+      <p style="font-family:var(--fm);font-size:var(--xs);color:var(--td);margin-top:6px;"><span id="gDone">0</span> of <span id="gTotal">30</span> skills mastered</p>
+    </div>
+  </div>
+
+  <!-- Career meter breakdown -->
+  <div class="sec">
+    <div class="sec__hd"><span class="sec__title">Your Coverage Map</span><span class="sec__sub">vs. job requirements</span></div>
+    <p style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);line-height:1.75;margin-bottom:var(--s2);">Here is how much of each job-relevant area this guide covers, and what employers actually test:</p>
+
+    <div class="career-bar"><div class="career-bar__label"><span>Language Fundamentals</span><span style="color:var(--n300);">~80% covered</span></div><div class="career-bar__track"><div class="career-bar__fill" style="width:80%;background:linear-gradient(90deg,var(--n500),var(--n300));"></div></div></div>
+    <div class="career-bar"><div class="career-bar__label"><span>Object-Oriented Programming</span><span style="color:var(--n300);">~70% covered</span></div><div class="career-bar__track"><div class="career-bar__fill" style="width:70%;background:linear-gradient(90deg,var(--n500),var(--n300));"></div></div></div>
+    <div class="career-bar"><div class="career-bar__label"><span>Error Handling & Async</span><span style="color:var(--n300);">~85% covered</span></div><div class="career-bar__track"><div class="career-bar__fill" style="width:85%;background:linear-gradient(90deg,var(--n500),var(--n300));"></div></div></div>
+    <div class="career-bar"><div class="career-bar__label"><span>File & Database Operations</span><span style="color:var(--n300);">~60% covered</span></div><div class="career-bar__track"><div class="career-bar__fill" style="width:60%;background:linear-gradient(90deg,var(--n500),var(--n300));"></div></div></div>
+    <div class="career-bar"><div class="career-bar__label"><span>Package Management</span><span style="color:var(--n300);">~75% covered</span></div><div class="career-bar__track"><div class="career-bar__fill" style="width:75%;background:linear-gradient(90deg,var(--n500),var(--n300));"></div></div></div>
+    <div class="career-bar"><div class="career-bar__label"><span>Testing & Debugging</span><span style="color:var(--n300);">~65% covered</span></div><div class="career-bar__track"><div class="career-bar__fill" style="width:65%;background:linear-gradient(90deg,var(--n500),var(--n300));"></div></div></div>
+    <div class="career-bar mb2"><div class="career-bar__label"><span>Automation Patterns</span><span style="color:var(--n300);">~90% covered</span></div><div class="career-bar__track"><div class="career-bar__fill" style="width:90%;background:linear-gradient(90deg,var(--n500),var(--n300));"></div></div></div>
+    <div class="callout"><p><strong>Overall coverage:</strong> This guide brings you to approximately <strong>55–65% of what a junior developer role requires</strong>. That is enough to pass screening interviews and technical assessments. Pair it with a portfolio project and you are hireable for junior positions.</p></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec__hd"><span class="sec__title">What Employers Test</span><span class="sec__sub">Interview reality</span></div>
+    <div style="display:flex;flex-direction:column;gap:var(--s2);">
+      <div class="interview"><div class="interview__label">Common Interview Question</div><div class="interview__q">"Explain the difference between a class and a function. When would you use each?"</div><p style="font-family:var(--fm);font-size:var(--xs);color:var(--td);">→ Covered in: OOP module</p></div>
+      <div class="interview"><div class="interview__label">Common Interview Question</div><div class="interview__q">"Write a function that reads a JSON file and returns the parsed data. Handle errors."</div><p style="font-family:var(--fm);font-size:var(--xs);color:var(--td);">→ Covered in: File Operations module</p></div>
+      <div class="interview"><div class="interview__label">Common Interview Question</div><div class="interview__q">"How would you install a package and ensure the version is locked for your team?"</div><p style="font-family:var(--fm);font-size:var(--xs);color:var(--td);">→ Covered in: Package Management module</p></div>
+      <div class="interview"><div class="interview__label">Common Interview Question</div><div class="interview__q">"Write a unit test for this function. What would you test first?"</div><p style="font-family:var(--fm);font-size:var(--xs);color:var(--td);">→ Covered in: Testing & Debugging module</p></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec__hd"><span class="sec__title">Guide Structure</span><span class="sec__sub">11 modules</span></div>
+    <div style="display:flex;flex-direction:column;gap:var(--s1);">
+      <div style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);padding:var(--s1) 0;border-bottom:1px solid var(--n800);display:flex;justify-content:space-between;"><span>Fundamentals (7 modules)</span><span class="tag tb">Core</span></div>
+      <div style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);padding:var(--s1) 0;border-bottom:1px solid var(--n800);display:flex;justify-content:space-between;"><span>OOP — Classes & Inheritance</span><span class="tag ti">New</span></div>
+      <div style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);padding:var(--s1) 0;border-bottom:1px solid var(--n800);display:flex;justify-content:space-between;"><span>File & Database Operations</span><span class="tag ti">New</span></div>
+      <div style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);padding:var(--s1) 0;border-bottom:1px solid var(--n800);display:flex;justify-content:space-between;"><span>Package Management</span><span class="tag ti">New</span></div>
+      <div style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);padding:var(--s1) 0;border-bottom:1px solid var(--n800);display:flex;justify-content:space-between;"><span>Testing & Debugging</span><span class="tag ti">New</span></div>
+      <div style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);padding:var(--s1) 0;border-bottom:1px solid var(--n800);display:flex;justify-content:space-between;"><span>6 Automation Patterns (worked examples)</span><span class="tag tb">Core</span></div>
+      <div style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);padding:var(--s1) 0;display:flex;justify-content:space-between;"><span>Practice Lab + 8 Exercises with answers</span><span class="tag tb">Core</span></div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════════════════════ PAGE 2 — LESSONS ════════════════════════════ -->
+<main id="page-lessons" class="page" role="main">
+  <div class="hero">
+    <div class="hero__bg" aria-hidden="true">02</div>
+    <p class="hero__eye">Section Two</p>
+    <h1 class="hero__h">Lessons</h1>
+    <p class="hero__sub">11 modules with real code examples in Python and Node.js. Each ends with an exercise and interview tip.</p>
+  </div>
+  <div class="sec" id="lessonSec"></div>
+</main>
+
+<!-- ═══════════════════════════ PAGE 3 — PATTERNS ════════════════════════════ -->
+<main id="page-patterns" class="page" role="main">
+  <div class="hero">
+    <div class="hero__bg" aria-hidden="true">03</div>
+    <p class="hero__eye">Section Three</p>
+    <h1 class="hero__h">Automation<br>Patterns</h1>
+    <p class="hero__sub">6 real-world automation patterns with full worked code examples in both languages.</p>
+  </div>
+  <div class="sec" id="patSec"></div>
+</main>
+
+<!-- ═══════════════════════════ PAGE 4 — PRACTICE ════════════════════════════ -->
+<main id="page-practice" class="page" role="main">
+  <div class="hero">
+    <div class="hero__bg" aria-hidden="true">04</div>
+    <p class="hero__eye">Section Four</p>
+    <h1 class="hero__h">Practice Lab</h1>
+    <p class="hero__sub">8 exercises with answer reveals + a live code sandbox. Interview-style questions included.</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec__hd"><span class="sec__title">Code Sandbox</span><span class="sec__sub">Write & validate</span></div>
+    <div class="sel-w mb2">
+      <select class="sel" id="langSel" aria-label="Select language">
+        <option value="python">Python</option>
+        <option value="nodejs">Node.js</option>
+      </select>
+    </div>
+    <label class="sr" for="codeIn">Code input</label>
+    <textarea class="textarea" id="codeIn" placeholder="# Write your code here…" aria-label="Code input" style="min-height:160px;"></textarea>
+    <div class="fg1 mt2">
+      <button class="btn btn-p" id="valBtn">▶ Validate</button>
+      <button class="btn btn-g" id="clrBtn">Clear</button>
+    </div>
+    <div class="out mt2" id="outBox" aria-live="polite">// Output will appear here…</div>
+  </div>
+
+  <div class="sec" id="exSec">
+    <div class="sec__hd"><span class="sec__title">Exercises</span><span class="sec__sub">8 challenges</span></div>
+  </div>
+</main>
+
+<!-- ═══════════════════════════ PAGE 5 — PROGRESS ════════════════════════════ -->
+<main id="page-progress" class="page" role="main">
+  <div class="hero">
+    <div class="hero__bg" aria-hidden="true">05</div>
+    <p class="hero__eye">Section Five</p>
+    <h1 class="hero__h">Progress Log</h1>
+    <p class="hero__sub">Track every skill, add notes, monitor your job-readiness score.</p>
+  </div>
+
+  <div class="pc">
+    <div class="pc__pct" id="lPct">0%</div>
+    <div class="pc__meta">
+      <div class="pc__lbl">Job Readiness Score</div>
+      <div class="pt"><div class="pf" id="lBar" style="width:0%"></div></div>
+      <p style="font-family:var(--fm);font-size:var(--xs);color:var(--td);margin-top:6px;"><span id="lDone">0</span> of 30 skills mastered</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec__hd"><span class="sec__title">Skill Tracker</span><span class="sec__sub">30 skills</span></div>
+    <div class="lg" id="logGrid" role="table">
+      <div class="lgh" role="row">
+        <span role="columnheader">#</span>
+        <span role="columnheader">Skill</span>
+        <span role="columnheader">Area</span>
+        <span role="columnheader">✓</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec__hd"><span class="sec__title">Job Prep Notes</span><span class="sec__sub">Your reflections</span></div>
+    <label class="sr" for="noteIn">Notes</label>
+    <textarea class="textarea" id="noteIn" placeholder="What clicked? What do you need to review? Which interview questions tripped you up?"></textarea>
+    <button class="btn btn-p mt2" id="saveNote">Save Note</button>
+    <div id="savedNotes" class="mt2" style="display:flex;flex-direction:column;gap:var(--s1);"></div>
+  </div>
+
+  <div class="sec" style="border-color:rgba(248,113,113,.2);">
+    <div class="sec__hd"><span class="sec__title" style="color:#f87171;">Reset Progress</span><span class="sec__sub">Destructive</span></div>
+    <button class="btn btn-d" id="resetBtn">Reset All Progress</button>
+  </div>
+</main>
+
+<!-- NAV -->
+<nav class="bnav" role="navigation" aria-label="Main navigation">
+  <button class="ni active" data-page="overview" aria-label="Overview" aria-current="page">
+    <div class="ni__iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+    <span class="ni__l">Overview</span>
+  </button>
+  <button class="ni" data-page="lessons" aria-label="Lessons">
+    <div class="ni__iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+    <span class="ni__l">Lessons</span>
+  </button>
+  <button class="ni" data-page="patterns" aria-label="Patterns">
+    <div class="ni__iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+    <span class="ni__l">Patterns</span>
+  </button>
+  <button class="ni" data-page="practice" aria-label="Practice">
+    <div class="ni__iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+    <span class="ni__l">Practice</span>
+  </button>
+  <button class="ni" data-page="progress" aria-label="Progress">
+    <div class="ni__iw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+    <span class="ni__l">Log</span>
+  </button>
+</nav>
+
+<!-- MODAL -->
+<div class="mov" id="resetModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>Reset Progress?</h2>
+    <p>This clears all mastery, notes, and exercise completion. Cannot be undone.</p>
+    <div class="macts">
+      <button class="btn btn-g" id="mCancel">Cancel</button>
+      <button class="btn btn-d" id="mConfirm">Yes, Reset</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   ALL MODULES — 11 total (7 fundamentals + 4 new job-ready)
+════════════════════════════════════════════════════════════ */
+const MODULES = [
+/* ─── 1. SYNTAX ─── */
+{id:'m1',title:'Syntax & Structure',level:'beginner',area:'Fundamentals',dots:3,
+ intro:'Syntax is the grammar of a programming language. Every rule you break is a bug. The two biggest differences between Python and Node.js are how they define blocks of code and how they handle line endings.',
+ lessons:[{
+   head:'Blocks, indentation, and semicolons',
+   body:'Python uses <strong>indentation</strong> to define code blocks. Node.js uses <strong>curly braces { }</strong>. This difference appears everywhere — in if statements, loops, and functions.',
+   py:`<span class="c">## Python: indentation defines blocks</span>
+<span class="k">if</span> True:
+    <span class="f">print</span>(<span class="s">"inside the if block"</span>)   <span class="c"># 4 spaces</span>
+<span class="f">print</span>(<span class="s">"outside — back to zero indent"</span>)
+
+<span class="c">## Comments use the # symbol</span>
+name = <span class="s">"Alice"</span>  <span class="c"># end-of-line comment</span>`,
+   js:`<span class="c">// Node.js: curly braces define blocks</span>
+<span class="k">if</span> (true) {
+    console.<span class="f">log</span>(<span class="s">"inside the if block"</span>);
+}
+console.<span class="f">log</span>(<span class="s">"outside the block"</span>);
+
+<span class="c">// Single-line comment</span>
+<span class="c">/* Multi-line comment */</span>
+<span class="k">const</span> name = <span class="s">"Alice"</span>;  <span class="c">// semicolons recommended</span>`
+ }],
+ callout:'<strong>Remember:</strong> Python will throw an IndentationError if your spacing is inconsistent. Always use 4 spaces (not tabs). Node.js is more forgiving but always use semicolons for clarity.',
+ interview:'What is the difference between syntax errors and runtime errors?',
+ interviewA:'Syntax errors are caught before the code runs (e.g. missing colon in Python). Runtime errors occur during execution (e.g. dividing by zero). Syntax errors always prevent the program from starting.',
+ exercise:{q:'Fix this Python code:\n\ndef greet(name):\nprint("Hello", name)',a:'def greet(name):\n    print("Hello", name)  # add 4-space indent\n\ngreet("Alice")  # call it to test'}
+},
+/* ─── 2. VARIABLES ─── */
+{id:'m2',title:'Variables & Data Types',level:'beginner',area:'Fundamentals',dots:3,
+ intro:'Variables store data. Every piece of information in your program lives in a variable. Knowing which type to use — and how to check it — is tested in almost every technical interview.',
+ lessons:[{
+   head:'The four core types',
+   body:'String (text), Number (integer/float), Boolean (true/false), None/null (no value). Every more complex data structure is built from these.',
+   py:`name    = <span class="s">"Alice"</span>           <span class="c"># str</span>
+age     = <span class="n">28</span>               <span class="c"># int</span>
+price   = <span class="n">9.99</span>             <span class="c"># float</span>
+active  = <span class="k">True</span>             <span class="c"># bool</span>
+result  = <span class="k">None</span>             <span class="c"># NoneType</span>
+
+<span class="f">print</span>(<span class="f">type</span>(name))          <span class="c"># &lt;class 'str'&gt;</span>
+<span class="f">print</span>(<span class="k">isinstance</span>(age, <span class="f">int</span>)) <span class="c"># True</span>`,
+   js:`<span class="k">const</span> name   = <span class="s">"Alice"</span>;    <span class="c">// string</span>
+<span class="k">const</span> age    = <span class="n">28</span>;          <span class="c">// number</span>
+<span class="k">const</span> price  = <span class="n">9.99</span>;        <span class="c">// number (no float type)</span>
+<span class="k">const</span> active = <span class="k">true</span>;        <span class="c">// boolean</span>
+<span class="k">let</span>   result = <span class="k">null</span>;        <span class="c">// null</span>
+
+console.<span class="f">log</span>(<span class="k">typeof</span> name);   <span class="c">// "string"</span>
+console.<span class="f">log</span>(<span class="k">typeof</span> age);    <span class="c">// "number"</span>`
+ },{
+   head:'Lists/Arrays and Dicts/Objects',
+   body:'Collections are critical for automation — API responses are almost always JSON objects or arrays of objects.',
+   py:`<span class="c"># List — ordered, mutable</span>
+tags = [<span class="s">"urgent"</span>, <span class="s">"vip"</span>, <span class="s">"open"</span>]
+tags.<span class="f">append</span>(<span class="s">"paid"</span>)
+<span class="f">print</span>(tags[<span class="n">0</span>])   <span class="c"># "urgent"</span>
+
+<span class="c"># Dict — key-value pairs (like JSON)</span>
+user = {<span class="s">"id"</span>: <span class="n">42</span>, <span class="s">"email"</span>: <span class="s">"a@b.com"</span>}
+<span class="f">print</span>(user[<span class="s">"email"</span>])          <span class="c"># "a@b.com"</span>
+<span class="f">print</span>(user.get(<span class="s">"phone"</span>, <span class="s">"N/A"</span>)) <span class="c"># "N/A" — safe default</span>`,
+   js:`<span class="c">// Array</span>
+<span class="k">const</span> tags = [<span class="s">"urgent"</span>, <span class="s">"vip"</span>, <span class="s">"open"</span>];
+tags.<span class="f">push</span>(<span class="s">"paid"</span>);
+console.<span class="f">log</span>(tags[<span class="n">0</span>]);  <span class="c">// "urgent"</span>
+
+<span class="c">// Object</span>
+<span class="k">const</span> user = { id: <span class="n">42</span>, email: <span class="s">"a@b.com"</span> };
+console.<span class="f">log</span>(user.email);          <span class="c">// "a@b.com"</span>
+console.<span class="f">log</span>(user.phone ?? <span class="s">"N/A"</span>); <span class="c">// "N/A" — nullish coalescing</span>`
+ }],
+ callout:'<strong>Interview tip:</strong> When asked "what is the difference between null and undefined?" in Node.js — null is intentional absence, undefined means the variable exists but was never assigned a value.',
+ interview:'What is the difference between const and let in JavaScript?',
+ interviewA:'const means the binding cannot be reassigned (but the object/array it points to can still be mutated). let can be reassigned. Use const by default and let only when you need to reassign.',
+ exercise:{q:'Write code to safely access user.address.city from this object:\n{"user":{"name":"Bob"}} — return "Unknown" if city doesn\'t exist.',a:'Python:\ndata = {"user": {"name": "Bob"}}\ncity = data.get("user", {}).get("address", {}).get("city", "Unknown")\nprint(city)  # "Unknown"\n\nNode.js:\nconst data = {"user": {"name": "Bob"}};\nconst city = data?.user?.address?.city ?? "Unknown";\nconsole.log(city);  // "Unknown"'}
+},
+/* ─── 3. CONTROL FLOW ─── */
+{id:'m3',title:'Control Flow',level:'beginner',area:'Fundamentals',dots:3,
+ intro:'Control flow is how your program makes decisions and repeats work. If/else and loops are the two most-tested concepts in entry-level coding interviews — you must be fluent in both.',
+ lessons:[{
+   head:'If / else if / else',
+   body:'Conditions evaluate to true or false. The matching branch runs. Only one branch runs per execution.',
+   py:`score = <span class="n">73</span>
+
+<span class="k">if</span> score >= <span class="n">90</span>:
+    grade = <span class="s">"A"</span>
+<span class="k">elif</span> score >= <span class="n">80</span>:
+    grade = <span class="s">"B"</span>
+<span class="k">elif</span> score >= <span class="n">70</span>:
+    grade = <span class="s">"C"</span>
+<span class="k">else</span>:
+    grade = <span class="s">"F"</span>
+
+<span class="f">print</span>(grade)  <span class="c"># "C"</span>`,
+   js:`<span class="k">const</span> score = <span class="n">73</span>;
+
+<span class="k">let</span> grade;
+<span class="k">if</span> (score >= <span class="n">90</span>)      grade = <span class="s">"A"</span>;
+<span class="k">else if</span> (score >= <span class="n">80</span>) grade = <span class="s">"B"</span>;
+<span class="k">else if</span> (score >= <span class="n">70</span>) grade = <span class="s">"C"</span>;
+<span class="k">else</span>                   grade = <span class="s">"F"</span>;
+
+console.<span class="f">log</span>(grade);  <span class="c">// "C"</span>`
+ },{
+   head:'For loops — the workhorse of automation',
+   body:'Loops process collections. In automation this means iterating over API results, spreadsheet rows, or event queues.',
+   py:`items = [<span class="s">"apple"</span>, <span class="s">"banana"</span>, <span class="s">"cherry"</span>]
+
+<span class="c"># basic loop</span>
+<span class="k">for</span> item <span class="k">in</span> items:
+    <span class="f">print</span>(item)
+
+<span class="c"># loop with index</span>
+<span class="k">for</span> i, item <span class="k">in</span> <span class="f">enumerate</span>(items):
+    <span class="f">print</span>(<span class="s">f"</span>{i}<span class="s">: </span>{item}<span class="s">"</span>)
+
+<span class="c"># list comprehension — concise filtering</span>
+long_names = [x <span class="k">for</span> x <span class="k">in</span> items <span class="k">if</span> <span class="f">len</span>(x) > <span class="n">5</span>]
+<span class="f">print</span>(long_names)  <span class="c"># ['banana', 'cherry']</span>`,
+   js:`<span class="k">const</span> items = [<span class="s">"apple"</span>, <span class="s">"banana"</span>, <span class="s">"cherry"</span>];
+
+<span class="c">// for...of</span>
+<span class="k">for</span> (<span class="k">const</span> item <span class="k">of</span> items) console.<span class="f">log</span>(item);
+
+<span class="c">// forEach with index</span>
+items.<span class="f">forEach</span>((item, i) => console.<span class="f">log</span>(<span class="s">\`\${i}: \${item}\`</span>));
+
+<span class="c">// filter — equivalent to list comprehension</span>
+<span class="k">const</span> longNames = items.<span class="f">filter</span>(x => x.length > <span class="n">5</span>);
+console.<span class="f">log</span>(longNames);  <span class="c">// ["banana", "cherry"]</span>`
+ }],
+ callout:'<strong>Interview pattern:</strong> Many coding challenges are just "loop + condition". Master these two together and you can solve the majority of entry-level algorithm questions.',
+ interview:'What is the difference between for...of and for...in in JavaScript?',
+ interviewA:'for...of iterates over values of an iterable (array, string). for...in iterates over keys/indices of an object. Use for...of for arrays, for...in for objects.',
+ exercise:{q:'Write a function that takes an array of numbers and returns the sum of all numbers greater than 10.',a:'Python:\ndef sum_above_ten(nums):\n    return sum(n for n in nums if n > 10)\nprint(sum_above_ten([5, 15, 3, 20, 8]))  # 35\n\nNode.js:\nfunction sumAboveTen(nums) {\n    return nums.filter(n => n > 10).reduce((a, b) => a + b, 0);\n}\nconsole.log(sumAboveTen([5, 15, 3, 20, 8]));  // 35'}
+},
+/* ─── 4. FUNCTIONS ─── */
+{id:'m4',title:'Functions',level:'inter',area:'Fundamentals',dots:4,
+ intro:'Functions are the building blocks of clean, reusable code. Every employer expects you to write functions that are focused (do one thing), named clearly, and have documented parameters.',
+ lessons:[{
+   head:'Defining, calling, and returning values',
+   body:'A function takes input (parameters), does work, and returns output. Always return a value — functions that return nothing are hard to test.',
+   py:`<span class="k">def</span> <span class="f">calculate_discount</span>(price, pct=<span class="n">10</span>):
+    <span class="s">"""Return price after applying discount percentage."""</span>
+    <span class="k">if</span> price < <span class="n">0</span>:
+        <span class="k">raise</span> ValueError(<span class="s">"Price cannot be negative"</span>)
+    discount = price * (pct / <span class="n">100</span>)
+    <span class="k">return</span> <span class="f">round</span>(price - discount, <span class="n">2</span>)
+
+<span class="f">print</span>(<span class="f">calculate_discount</span>(<span class="n">100</span>))      <span class="c"># 90.0</span>
+<span class="f">print</span>(<span class="f">calculate_discount</span>(<span class="n">100</span>, <span class="n">25</span>))   <span class="c"># 75.0</span>`,
+   js:`<span class="k">function</span> <span class="f">calculateDiscount</span>(price, pct = <span class="n">10</span>) {
+    <span class="k">if</span> (price < <span class="n">0</span>) <span class="k">throw new</span> Error(<span class="s">"Price cannot be negative"</span>);
+    <span class="k">const</span> discount = price * (pct / <span class="n">100</span>);
+    <span class="k">return</span> <span class="f">parseFloat</span>((price - discount).<span class="f">toFixed</span>(<span class="n">2</span>));
+}
+
+console.<span class="f">log</span>(<span class="f">calculateDiscount</span>(<span class="n">100</span>));     <span class="c">// 90</span>
+console.<span class="f">log</span>(<span class="f">calculateDiscount</span>(<span class="n">100</span>, <span class="n">25</span>)); <span class="c">// 75</span>`
+ },{
+   head:'Arrow functions (Node.js) and lambda (Python)',
+   body:'Short anonymous functions. Used heavily in callbacks, array methods, and one-liner transforms.',
+   py:`<span class="c"># lambda — one-liner anonymous function</span>
+double = <span class="k">lambda</span> x: x * <span class="n">2</span>
+<span class="f">print</span>(<span class="f">double</span>(<span class="n">5</span>))   <span class="c"># 10</span>
+
+<span class="c"># common use: sorting with a key</span>
+orders = [{"total": <span class="n">50</span>}, {"total": <span class="n">20</span>}, {"total": <span class="n">80</span>}]
+sorted_orders = <span class="f">sorted</span>(orders, key=<span class="k">lambda</span> o: o[<span class="s">"total"</span>])
+<span class="f">print</span>(sorted_orders[<span class="n">0</span>])  <span class="c"># {"total": 20}</span>`,
+   js:`<span class="c">// arrow function</span>
+<span class="k">const</span> double = x => x * <span class="n">2</span>;
+console.<span class="f">log</span>(<span class="f">double</span>(<span class="n">5</span>));  <span class="c">// 10</span>
+
+<span class="c">// sorting with arrow function</span>
+<span class="k">const</span> orders = [{ total: <span class="n">50</span> }, { total: <span class="n">20</span> }, { total: <span class="n">80</span> }];
+<span class="k">const</span> sorted = [...orders].<span class="f">sort</span>((a, b) => a.total - b.total);
+console.<span class="f">log</span>(sorted[<span class="n">0</span>]);  <span class="c">// { total: 20 }</span>`
+ }],
+ callout:'<strong>Interview rule:</strong> Every function you write in an interview should: (1) have a clear name, (2) validate its inputs, (3) return a value. Always mention you\'d add a docstring/JSDoc comment in production.',
+ interview:'What is the difference between a function declaration and a function expression in JavaScript?',
+ interviewA:'Function declarations are hoisted — you can call them before they appear in the file. Function expressions (including arrow functions) are not hoisted. Example: function foo(){} vs const foo = () => {}.',
+ exercise:{q:'Write a function "groupBy(arr, key)" that groups an array of objects by a property.\nInput: [{type:"A",v:1},{type:"B",v:2},{type:"A",v:3}]\nOutput: {A:[...],B:[...]}',a:'Python:\ndef group_by(arr, key):\n    result = {}\n    for item in arr:\n        k = item[key]\n        result.setdefault(k, []).append(item)\n    return result\n\nNode.js:\nfunction groupBy(arr, key) {\n    return arr.reduce((acc, item) => {\n        const k = item[key];\n        if (!acc[k]) acc[k] = [];\n        acc[k].push(item);\n        return acc;\n    }, {});\n}'}
+},
+/* ─── 5. ERROR HANDLING ─── */
+{id:'m5',title:'Error Handling',level:'inter',area:'Fundamentals',dots:4,
+ intro:'Unhandled errors crash programs and break automations. Every professional codebase wraps risky operations in error handling. This is one of the first things senior developers look for in code reviews.',
+ lessons:[{
+   head:'Try / catch / finally',
+   body:'Wrap any operation that can fail. Return meaningful fallbacks. Log errors with context, not just the message.',
+   py:`<span class="k">def</span> <span class="f">parse_user_id</span>(raw_id):
+    <span class="k">try</span>:
+        user_id = <span class="f">int</span>(raw_id)
+        <span class="k">if</span> user_id <= <span class="n">0</span>:
+            <span class="k">raise</span> ValueError(<span class="s">f"ID must be positive, got </span>{user_id}<span class="s">"</span>)
+        <span class="k">return</span> user_id
+    <span class="k">except</span> ValueError <span class="k">as</span> e:
+        <span class="f">print</span>(<span class="s">f"[ERROR] Invalid user ID: </span>{e}<span class="s">"</span>)
+        <span class="k">return</span> <span class="k">None</span>
+    <span class="k">except</span> TypeError:
+        <span class="f">print</span>(<span class="s">"[ERROR] ID must be a string or number"</span>)
+        <span class="k">return</span> <span class="k">None</span>
+    <span class="k">finally</span>:
+        <span class="f">print</span>(<span class="s">"parse_user_id() attempt complete"</span>)
+
+<span class="f">print</span>(<span class="f">parse_user_id</span>(<span class="s">"abc"</span>))   <span class="c"># None</span>
+<span class="f">print</span>(<span class="f">parse_user_id</span>(<span class="s">"42"</span>))    <span class="c"># 42</span>`,
+   js:`<span class="k">function</span> <span class="f">parseUserId</span>(rawId) {
+    <span class="k">try</span> {
+        <span class="k">const</span> id = <span class="f">parseInt</span>(rawId, <span class="n">10</span>);
+        <span class="k">if</span> (isNaN(id) || id <= <span class="n">0</span>)
+            <span class="k">throw new</span> Error(<span class="s">\`Invalid ID: \${rawId}\`</span>);
+        <span class="k">return</span> id;
+    } <span class="k">catch</span> (err) {
+        console.<span class="f">error</span>(<span class="s">"[ERROR]"</span>, err.message);
+        <span class="k">return</span> <span class="k">null</span>;
+    } <span class="k">finally</span> {
+        console.<span class="f">log</span>(<span class="s">"parseUserId() attempt complete"</span>);
+    }
+}
+
+console.<span class="f">log</span>(<span class="f">parseUserId</span>(<span class="s">"abc"</span>));  <span class="c">// null</span>
+console.<span class="f">log</span>(<span class="f">parseUserId</span>(<span class="s">"42"</span>));   <span class="c">// 42</span>`
+ }],
+ callout:'<strong>Interview tip:</strong> When given a code snippet to review, always mention adding error handling as an improvement. It shows maturity. Also mention logging errors with enough context to debug them later.',
+ interview:'What is the difference between throw and return in error handling?',
+ interviewA:'return exits the function normally with a value. throw exits and propagates an error up the call stack, bypassing normal return. A caller must catch a thrown error or it will crash the program.',
+ exercise:{q:'Write a function "safeJsonParse(str)" that parses a JSON string and returns the parsed object. If parsing fails, return null and log the error.',a:'Python:\nimport json\n\ndef safe_json_parse(s):\n    try:\n        return json.loads(s)\n    except json.JSONDecodeError as e:\n        print(f"[ERROR] JSON parse failed: {e}")\n        return None\n\nNode.js:\nfunction safeJsonParse(str) {\n    try {\n        return JSON.parse(str);\n    } catch (err) {\n        console.error("[ERROR] JSON parse failed:", err.message);\n        return null;\n    }\n}'}
+},
+/* ─── 6. ASYNC ─── */
+{id:'m6',title:'Async & Promises',level:'advanced',area:'Fundamentals',dots:5,
+ intro:'Async code is mandatory for any job that involves APIs, databases, or network requests — which is almost every dev job. You must be able to explain the event loop, promises, and async/await without hesitation.',
+ lessons:[{
+   head:'async / await — the modern standard',
+   body:'async/await is the clearest way to write async code. Mark a function async, then await any promise inside it. Always pair with try/catch.',
+   py:`<span class="k">import</span> asyncio
+
+<span class="k">async def</span> <span class="f">get_user</span>(user_id: <span class="f">int</span>):
+    <span class="k">try</span>:
+        <span class="c"># simulate network call</span>
+        <span class="k">await</span> asyncio.<span class="f">sleep</span>(<span class="n">0.1</span>)
+        <span class="k">return</span> {<span class="s">"id"</span>: user_id, <span class="s">"name"</span>: <span class="s">"Alice"</span>}
+    <span class="k">except</span> Exception <span class="k">as</span> e:
+        <span class="f">print</span>(<span class="s">f"Failed: </span>{e}<span class="s">"</span>)
+        <span class="k">return</span> <span class="k">None</span>
+
+<span class="k">async def</span> <span class="f">main</span>():
+    user = <span class="k">await</span> <span class="f">get_user</span>(<span class="n">1</span>)
+    <span class="f">print</span>(user)  <span class="c"># {"id": 1, "name": "Alice"}</span>
+
+asyncio.<span class="f">run</span>(<span class="f">main</span>())`,
+   js:`<span class="k">async function</span> <span class="f">getUser</span>(userId) {
+    <span class="k">try</span> {
+        <span class="c">// in real code: const res = await fetch(url)</span>
+        <span class="k">await new</span> <span class="f">Promise</span>(r => <span class="f">setTimeout</span>(r, <span class="n">100</span>));
+        <span class="k">return</span> { id: userId, name: <span class="s">"Alice"</span> };
+    } <span class="k">catch</span> (err) {
+        console.<span class="f">error</span>(<span class="s">"Failed:"</span>, err.message);
+        <span class="k">return</span> <span class="k">null</span>;
+    }
+}
+
+<span class="c">// call it — top-level await works in Node.js 14+</span>
+<span class="k">const</span> user = <span class="k">await</span> <span class="f">getUser</span>(<span class="n">1</span>);
+console.<span class="f">log</span>(user);  <span class="c">// { id: 1, name: "Alice" }</span>`
+ }],
+ callout:'<strong>Interview must-know:</strong> Be ready to explain "the event loop" in one sentence: "The event loop lets JavaScript run non-blocking code by deferring async operations to a queue and returning to them when the call stack is empty."',
+ interview:'What is the difference between Promise.all and Promise.allSettled?',
+ interviewA:'Promise.all runs all promises in parallel and fails fast — if one rejects, the whole thing rejects. Promise.allSettled waits for all to complete regardless of success or failure, then gives you the result of each.',
+ exercise:{q:'Write an async function "fetchAll(urls)" that fetches data from multiple URLs in parallel and returns an array of results. Handle errors per URL.',a:'Node.js:\nasync function fetchAll(urls) {\n    const results = await Promise.allSettled(\n        urls.map(url => fetch(url).then(r => r.json()))\n    );\n    return results.map(r => r.status === "fulfilled" ? r.value : null);\n}\n\nPython (asyncio):\nasync def fetch_all(urls):\n    async def fetch_one(url):\n        try:\n            async with session.get(url) as r:\n                return await r.json()\n        except:\n            return None\n    return await asyncio.gather(*[fetch_one(u) for u in urls])'}
+},
+/* ─── 7. MODULES ─── */
+{id:'m7',title:'Modules & Imports',level:'inter',area:'Fundamentals',dots:4,
+ intro:'Modules are pre-written code libraries. Using the right module saves hours of work. Knowing which modules exist — and how to import them correctly — is a basic competency employers expect.',
+ lessons:[{
+   head:'Built-in modules you will use constantly',
+   body:'Both languages have a standard library. These modules require no installation — they come bundled.',
+   py:`<span class="k">import</span> json, os, re
+<span class="k">from</span> datetime <span class="k">import</span> datetime, timedelta
+<span class="k">from</span> pathlib <span class="k">import</span> Path
+<span class="k">from</span> collections <span class="k">import</span> defaultdict
+
+<span class="c"># json — parse and stringify</span>
+data = json.<span class="f">loads</span>(<span class="s">'{"key":"val"}'</span>)
+text = json.<span class="f">dumps</span>(data, indent=<span class="n">2</span>)
+
+<span class="c"># datetime — work with dates</span>
+now = datetime.<span class="f">now</span>()
+tomorrow = now + timedelta(days=<span class="n">1</span>)
+<span class="f">print</span>(tomorrow.<span class="f">strftime</span>(<span class="s">"%Y-%m-%d"</span>))
+
+<span class="c"># os.environ — read environment variables</span>
+api_key = os.environ.<span class="f">get</span>(<span class="s">"API_KEY"</span>, <span class="s">"fallback"</span>)`,
+   js:`<span class="c">// Built-ins (no import needed in most runtimes)</span>
+
+<span class="c">// JSON — built into the language</span>
+<span class="k">const</span> data = JSON.<span class="f">parse</span>(<span class="s">'{"key":"val"}'</span>);
+<span class="k">const</span> text = JSON.<span class="f">stringify</span>(data, <span class="k">null</span>, <span class="n">2</span>);
+
+<span class="c">// Date</span>
+<span class="k">const</span> now = <span class="k">new</span> <span class="f">Date</span>();
+<span class="k">const</span> tomorrow = <span class="k">new</span> <span class="f">Date</span>(Date.<span class="f">now</span>() + <span class="n">86400000</span>);
+
+<span class="c">// process.env — read environment variables</span>
+<span class="k">const</span> apiKey = process.env.API_KEY ?? <span class="s">"fallback"</span>;`
+ }],
+ callout:'<strong>Job tip:</strong> Never hardcode API keys in your source code. Always use environment variables (os.environ in Python, process.env in Node.js). This is a security requirement every employer cares about.',
+ interview:'What is the difference between import and require in Node.js?',
+ interviewA:'require() is CommonJS (older Node.js). import/export is ES Modules (modern standard). Most new projects use ES Modules. In a package.json, set "type":"module" to use import syntax.',
+ exercise:{q:'Write a function that returns today\'s date formatted as "DD/MM/YYYY" and another date 30 days from now in the same format.',a:'Python:\nfrom datetime import datetime, timedelta\n\ndef date_range():\n    today = datetime.now()\n    future = today + timedelta(days=30)\n    fmt = "%d/%m/%Y"\n    return today.strftime(fmt), future.strftime(fmt)\n\nprint(date_range())\n\nNode.js:\nfunction dateRange() {\n    const fmt = d => d.toLocaleDateString("en-GB");\n    const today = new Date();\n    const future = new Date(Date.now() + 30 * 86400000);\n    return [fmt(today), fmt(future)];\n}\nconsole.log(dateRange());'}
+},
+/* ─── 8. OOP ─── */
+{id:'m8',title:'Classes & OOP',level:'inter',area:'Object-Oriented',dots:4,
+ intro:'Object-Oriented Programming (OOP) organises code into classes — blueprints that create objects. Every employer asks about OOP concepts. The four pillars are Encapsulation, Inheritance, Polymorphism, and Abstraction.',
+ lessons:[{
+   head:'Classes, attributes, and methods',
+   body:'A class is a blueprint. An object is an instance of a class. Methods are functions that belong to the class. __init__ / constructor runs when you create an object.',
+   py:`<span class="k">class</span> <span class="f">Order</span>:
+    <span class="s">"""Represents a customer order."""</span>
+
+    <span class="k">def</span> <span class="f">__init__</span>(<span class="k">self</span>, order_id, customer, total):
+        <span class="k">self</span>.order_id  = order_id
+        <span class="k">self</span>.customer  = customer
+        <span class="k">self</span>.total     = total
+        <span class="k">self</span>.status    = <span class="s">"pending"</span>
+
+    <span class="k">def</span> <span class="f">mark_paid</span>(<span class="k">self</span>):
+        <span class="k">self</span>.status = <span class="s">"paid"</span>
+        <span class="k">return</span> <span class="k">self</span>   <span class="c"># allow chaining</span>
+
+    <span class="k">def</span> <span class="f">summary</span>(<span class="k">self</span>):
+        <span class="k">return</span> <span class="s">f"Order </span>{<span class="k">self</span>.order_id}<span class="s"> | </span>{<span class="k">self</span>.customer}<span class="s"> | £</span>{<span class="k">self</span>.total}<span class="s"> | </span>{<span class="k">self</span>.status}<span class="s">"</span>
+
+o = <span class="f">Order</span>(<span class="s">"ORD-001"</span>, <span class="s">"Alice"</span>, <span class="n">149.99</span>)
+o.<span class="f">mark_paid</span>()
+<span class="f">print</span>(o.<span class="f">summary</span>())  <span class="c"># Order ORD-001 | Alice | £149.99 | paid</span>`,
+   js:`<span class="k">class</span> <span class="f">Order</span> {
+    <span class="c">/** @param {string} orderId @param {string} customer @param {number} total */</span>
+    <span class="f">constructor</span>(orderId, customer, total) {
+        <span class="k">this</span>.orderId  = orderId;
+        <span class="k">this</span>.customer = customer;
+        <span class="k">this</span>.total    = total;
+        <span class="k">this</span>.status   = <span class="s">"pending"</span>;
+    }
+
+    <span class="f">markPaid</span>() { <span class="k">this</span>.status = <span class="s">"paid"</span>; <span class="k">return this</span>; }
+
+    <span class="f">summary</span>() {
+        <span class="k">return</span> <span class="s">\`Order \${this.orderId} | \${this.customer} | £\${this.total} | \${this.status}\`</span>;
+    }
+}
+
+<span class="k">const</span> o = <span class="k">new</span> <span class="f">Order</span>(<span class="s">"ORD-001"</span>, <span class="s">"Alice"</span>, <span class="n">149.99</span>);
+o.<span class="f">markPaid</span>();
+console.<span class="f">log</span>(o.<span class="f">summary</span>());  <span class="c">// Order ORD-001 | Alice | £149.99 | paid</span>`
+ },{
+   head:'Inheritance — extending a class',
+   body:'Inheritance lets a new class take all the behaviour of a parent class, then add or change things. This is the "IS-A" relationship: a PremiumOrder IS-A Order.',
+   py:`<span class="k">class</span> <span class="f">PremiumOrder</span>(<span class="f">Order</span>):  <span class="c"># inherits from Order</span>
+    <span class="k">def</span> <span class="f">__init__</span>(<span class="k">self</span>, order_id, customer, total, discount):
+        <span class="f">super</span>().<span class="f">__init__</span>(order_id, customer, total)  <span class="c"># call parent</span>
+        <span class="k">self</span>.discount = discount
+
+    <span class="k">def</span> <span class="f">final_total</span>(<span class="k">self</span>):
+        <span class="k">return</span> <span class="k">self</span>.total * (<span class="n">1</span> - <span class="k">self</span>.discount / <span class="n">100</span>)
+
+    <span class="k">def</span> <span class="f">summary</span>(<span class="k">self</span>):  <span class="c"># override parent method</span>
+        base = <span class="f">super</span>().<span class="f">summary</span>()
+        <span class="k">return</span> <span class="s">f"</span>{base}<span class="s"> [PREMIUM -</span>{<span class="k">self</span>.discount}<span class="s">%]"</span>
+
+p = <span class="f">PremiumOrder</span>(<span class="s">"ORD-002"</span>, <span class="s">"Bob"</span>, <span class="n">200</span>, <span class="n">20</span>)
+<span class="f">print</span>(p.<span class="f">final_total</span>())  <span class="c"># 160.0</span>
+<span class="f">print</span>(p.<span class="f">summary</span>())`,
+   js:`<span class="k">class</span> <span class="f">PremiumOrder</span> <span class="k">extends</span> <span class="f">Order</span> {
+    <span class="f">constructor</span>(orderId, customer, total, discount) {
+        <span class="k">super</span>(orderId, customer, total);
+        <span class="k">this</span>.discount = discount;
+    }
+
+    <span class="f">finalTotal</span>() {
+        <span class="k">return this</span>.total * (<span class="n">1</span> - <span class="k">this</span>.discount / <span class="n">100</span>);
+    }
+
+    <span class="f">summary</span>() {  <span class="c">// override</span>
+        <span class="k">return</span> <span class="s">\`\${super.summary()} [PREMIUM -\${this.discount}%]\`</span>;
+    }
+}
+
+<span class="k">const</span> p = <span class="k">new</span> <span class="f">PremiumOrder</span>(<span class="s">"ORD-002"</span>, <span class="s">"Bob"</span>, <span class="n">200</span>, <span class="n">20</span>);
+console.<span class="f">log</span>(p.<span class="f">finalTotal</span>());  <span class="c">// 160</span>
+console.<span class="f">log</span>(p.<span class="f">summary</span>());`
+ }],
+ callout:'<strong>The 4 OOP pillars (memorise these):</strong><br>• <strong>Encapsulation</strong> — bundle data + methods, hide internal state<br>• <strong>Inheritance</strong> — child class extends parent class<br>• <strong>Polymorphism</strong> — same method name, different behaviour in subclasses<br>• <strong>Abstraction</strong> — expose only what\'s needed, hide complexity',
+ interview:'What is the difference between a class and an object?',
+ interviewA:'A class is a blueprint or template. An object is a specific instance created from that blueprint. If "Car" is the class, then your red Toyota with number plate XYZ123 is an object (instance) of Car.',
+ exercise:{q:'Create a class "BankAccount" with a balance, a deposit(amount) method, and a withdraw(amount) method. Withdrawal should fail if balance is insufficient.',a:'Python:\nclass BankAccount:\n    def __init__(self, owner, balance=0):\n        self.owner = owner\n        self.balance = balance\n\n    def deposit(self, amount):\n        if amount <= 0: raise ValueError("Amount must be positive")\n        self.balance += amount\n        return self.balance\n\n    def withdraw(self, amount):\n        if amount > self.balance: raise ValueError("Insufficient funds")\n        self.balance -= amount\n        return self.balance\n\nacc = BankAccount("Alice", 100)\nacc.deposit(50)    # 150\nacc.withdraw(30)   # 120\n\nNode.js:\nclass BankAccount {\n    constructor(owner, balance = 0) {\n        this.owner = owner;\n        this.balance = balance;\n    }\n    deposit(amount) {\n        if (amount <= 0) throw new Error("Amount must be positive");\n        this.balance += amount;\n        return this.balance;\n    }\n    withdraw(amount) {\n        if (amount > this.balance) throw new Error("Insufficient funds");\n        this.balance -= amount;\n        return this.balance;\n    }\n}'}
+},
+/* ─── 9. FILE & DB ─── */
+{id:'m9',title:'File & Database Operations',level:'inter',area:'File & DB',dots:4,
+ intro:'Almost every real application reads files or queries a database. Employers expect you to read/write JSON and CSV files, and understand basic database patterns — even if you do not write raw SQL in every job.',
+ lessons:[{
+   head:'Reading and writing files',
+   body:'File I/O is a fundamental skill. Always use context managers (with/using) to ensure files are properly closed after use — this prevents data corruption and resource leaks.',
+   py:`<span class="k">import</span> json
+<span class="k">from</span> pathlib <span class="k">import</span> Path
+
+<span class="c"># Write JSON to a file</span>
+<span class="k">def</span> <span class="f">save_data</span>(data, filepath):
+    path = Path(filepath)
+    path.parent.<span class="f">mkdir</span>(parents=<span class="k">True</span>, exist_ok=<span class="k">True</span>)
+    <span class="k">with</span> <span class="f">open</span>(path, <span class="s">"w"</span>) <span class="k">as</span> f:
+        json.<span class="f">dump</span>(data, f, indent=<span class="n">2</span>)
+    <span class="f">print</span>(<span class="s">f"Saved to </span>{path}<span class="s">"</span>)
+
+<span class="c"># Read JSON from a file</span>
+<span class="k">def</span> <span class="f">load_data</span>(filepath):
+    <span class="k">try</span>:
+        <span class="k">with</span> <span class="f">open</span>(filepath, <span class="s">"r"</span>) <span class="k">as</span> f:
+            <span class="k">return</span> json.<span class="f">load</span>(f)
+    <span class="k">except</span> FileNotFoundError:
+        <span class="f">print</span>(<span class="s">f"File not found: </span>{filepath}<span class="s">"</span>)
+        <span class="k">return</span> <span class="k">None</span>
+
+orders = [{<span class="s">"id"</span>: <span class="n">1</span>, <span class="s">"total"</span>: <span class="n">99.99</span>}]
+<span class="f">save_data</span>(orders, <span class="s">"data/orders.json"</span>)
+loaded = <span class="f">load_data</span>(<span class="s">"data/orders.json"</span>)`,
+   js:`<span class="k">const</span> fs   = <span class="k">require</span>(<span class="s">"fs"</span>);
+<span class="k">const</span> path = <span class="k">require</span>(<span class="s">"path"</span>);
+
+<span class="c">// Write JSON to a file (sync — simple for scripts)</span>
+<span class="k">function</span> <span class="f">saveData</span>(data, filepath) {
+    <span class="k">const</span> dir = path.<span class="f">dirname</span>(filepath);
+    <span class="k">if</span> (!fs.<span class="f">existsSync</span>(dir)) fs.<span class="f">mkdirSync</span>(dir, { recursive: <span class="k">true</span> });
+    fs.<span class="f">writeFileSync</span>(filepath, JSON.<span class="f">stringify</span>(data, <span class="k">null</span>, <span class="n">2</span>));
+    console.<span class="f">log</span>(<span class="s">\`Saved to \${filepath}\`</span>);
+}
+
+<span class="c">// Read JSON from a file</span>
+<span class="k">function</span> <span class="f">loadData</span>(filepath) {
+    <span class="k">try</span> {
+        <span class="k">const</span> raw = fs.<span class="f">readFileSync</span>(filepath, <span class="s">"utf-8"</span>);
+        <span class="k">return</span> JSON.<span class="f">parse</span>(raw);
+    } <span class="k">catch</span> (err) {
+        console.<span class="f">error</span>(<span class="s">"Load failed:"</span>, err.message);
+        <span class="k">return</span> <span class="k">null</span>;
+    }
+}`
+ },{
+   head:'Database patterns — the concepts you need to know',
+   body:'Most jobs involve SQL or a NoSQL database. You do not need to memorise syntax — you need to understand the pattern: connect, query, handle results, close. This is the universal shape of database code.',
+   py:`<span class="k">import</span> sqlite3
+
+<span class="k">def</span> <span class="f">get_users_above_spend</span>(db_path, min_spend):
+    <span class="s">"""Fetch users whose total spend exceeds min_spend."""</span>
+    <span class="k">try</span>:
+        conn = sqlite3.<span class="f">connect</span>(db_path)
+        conn.row_factory = sqlite3.Row  <span class="c"># return dicts</span>
+        cursor = conn.<span class="f">cursor</span>()
+
+        cursor.<span class="f">execute</span>(
+            <span class="s">"SELECT id, name, total_spend FROM users WHERE total_spend > ?"</span>,
+            (min_spend,)  <span class="c"># parameterised — prevents SQL injection</span>
+        )
+        rows = cursor.<span class="f">fetchall</span>()
+        <span class="k">return</span> [<span class="f">dict</span>(r) <span class="k">for</span> r <span class="k">in</span> rows]
+    <span class="k">except</span> Exception <span class="k">as</span> e:
+        <span class="f">print</span>(<span class="s">f"DB error: </span>{e}<span class="s">"</span>)
+        <span class="k">return</span> []
+    <span class="k">finally</span>:
+        conn.<span class="f">close</span>()`,
+   js:`<span class="c">// Pattern using any SQL library (e.g. better-sqlite3, pg)</span>
+<span class="k">function</span> <span class="f">getUsersAboveSpend</span>(db, minSpend) {
+    <span class="k">try</span> {
+        <span class="c">// parameterised query — always use ? or $1, never string concat</span>
+        <span class="k">const</span> stmt = db.<span class="f">prepare</span>(
+            <span class="s">"SELECT id, name, total_spend FROM users WHERE total_spend > ?"</span>
+        );
+        <span class="k">return</span> stmt.<span class="f">all</span>(minSpend);
+    } <span class="k">catch</span> (err) {
+        console.<span class="f">error</span>(<span class="s">"DB error:"</span>, err.message);
+        <span class="k">return</span> [];
+    }
+}
+
+<span class="c">// MongoDB pattern (NoSQL)</span>
+<span class="k">async function</span> <span class="f">getUsersMongo</span>(db, minSpend) {
+    <span class="k">return</span> db.collection(<span class="s">"users"</span>).<span class="f">find</span>(
+        { total_spend: { $gt: minSpend } }
+    ).<span class="f">toArray</span>();
+}`
+ }],
+ callout:'<strong>Security rule (memorise this):</strong> NEVER build SQL queries by concatenating user input strings. Always use parameterised queries (?  placeholders). This prevents SQL injection attacks — the #1 web security vulnerability.',
+ interview:'What is SQL injection and how do you prevent it?',
+ interviewA:'SQL injection is when an attacker puts SQL code in user input to manipulate your database query. Prevention: always use parameterised queries or prepared statements — never build queries by string concatenation.',
+ exercise:{q:'Write a function that reads a JSON file of products, filters to only those with price > 50, and returns them sorted by price ascending.',a:'Python:\nimport json\n\ndef get_premium_products(filepath):\n    try:\n        with open(filepath) as f:\n            products = json.load(f)\n        filtered = [p for p in products if p["price"] > 50]\n        return sorted(filtered, key=lambda p: p["price"])\n    except FileNotFoundError:\n        return []\n\nNode.js:\nconst fs = require("fs");\n\nfunction getPremiumProducts(filepath) {\n    try {\n        const raw = fs.readFileSync(filepath, "utf-8");\n        const products = JSON.parse(raw);\n        return products\n            .filter(p => p.price > 50)\n            .sort((a, b) => a.price - b.price);\n    } catch (err) {\n        return [];\n    }\n}'}
+},
+/* ─── 10. PACKAGES ─── */
+{id:'m10',title:'Package Management',level:'inter',area:'Packages',dots:4,
+ intro:'Package managers are how you add third-party libraries to your project. Knowing pip (Python) and npm (Node.js) is essential day-one knowledge for any dev job. Employers also expect you to understand version locking and virtual environments.',
+ lessons:[{
+   head:'pip — Python package manager',
+   body:'pip installs packages from PyPI (Python Package Index). Always use a virtual environment so packages are isolated per project.',
+   py:`<span class="c">## Terminal commands (not Python code)</span>
+<span class="c">## ─────────────────────────────────────</span>
+
+<span class="c">## 1. Create a virtual environment</span>
+<span class="c">##    python -m venv venv</span>
+
+<span class="c">## 2. Activate it</span>
+<span class="c">##    Mac/Linux: source venv/bin/activate</span>
+<span class="c">##    Windows:   venv\\Scripts\\activate</span>
+
+<span class="c">## 3. Install a package</span>
+<span class="c">##    pip install requests</span>
+
+<span class="c">## 4. Save all dependencies with exact versions</span>
+<span class="c">##    pip freeze > requirements.txt</span>
+
+<span class="c">## 5. Install from requirements.txt (new machine)</span>
+<span class="c">##    pip install -r requirements.txt</span>
+
+<span class="c">## In your Python code:</span>
+<span class="k">import</span> requests
+
+response = requests.<span class="f">get</span>(<span class="s">"https://api.github.com"</span>)
+<span class="f">print</span>(response.status_code)   <span class="c"># 200</span>
+<span class="f">print</span>(response.<span class="f">json</span>())`,
+   js:`<span class="c">// Terminal commands (not JS code)</span>
+<span class="c">// ─────────────────────────────────────</span>
+
+<span class="c">// 1. Initialise a new project</span>
+<span class="c">//    npm init -y</span>
+
+<span class="c">// 2. Install a package (saved to package.json)</span>
+<span class="c">//    npm install axios</span>
+
+<span class="c">// 3. Install dev-only package</span>
+<span class="c">//    npm install --save-dev jest</span>
+
+<span class="c">// 4. Install from package.json (new machine)</span>
+<span class="c">//    npm install</span>
+
+<span class="c">// 5. package-lock.json locks exact versions</span>
+<span class="c">//    Always commit this file!</span>
+
+<span class="c">// In your JS code:</span>
+<span class="k">const</span> axios = <span class="k">require</span>(<span class="s">"axios"</span>);
+<span class="k">const</span> res = <span class="k">await</span> axios.<span class="f">get</span>(<span class="s">"https://api.github.com"</span>);
+console.<span class="f">log</span>(res.status);   <span class="c">// 200</span>`
+ },{
+   head:'Understanding package.json and requirements.txt',
+   body:'These files define your project\'s dependencies. They are how your team shares and reproduces the same environment. Always commit them. Never commit node_modules or venv folders.',
+   py:`<span class="c"># requirements.txt example</span>
+<span class="c"># ─────────────────────────────</span>
+<span class="c"># requests==2.31.0</span>
+<span class="c"># python-dotenv==1.0.0</span>
+<span class="c"># pytest==7.4.0</span>
+
+<span class="c"># .gitignore — add these lines:</span>
+<span class="c"># venv/</span>
+<span class="c"># __pycache__/</span>
+<span class="c"># .env</span>
+
+<span class="c"># Load environment variables from .env file</span>
+<span class="k">from</span> dotenv <span class="k">import</span> load_dotenv
+<span class="k">import</span> os
+
+load_dotenv()   <span class="c"># reads .env file into os.environ</span>
+api_key = os.environ.<span class="f">get</span>(<span class="s">"API_KEY"</span>)`,
+   js:`<span class="c">// package.json (auto-generated by npm init)</span>
+<span class="c">// {</span>
+<span class="c">//   "name": "my-project",</span>
+<span class="c">//   "version": "1.0.0",</span>
+<span class="c">//   "dependencies": { "axios": "^1.6.0" },</span>
+<span class="c">//   "devDependencies": { "jest": "^29.0.0" }</span>
+<span class="c">// }</span>
+
+<span class="c">// .gitignore — add these lines:</span>
+<span class="c">// node_modules/</span>
+<span class="c">// .env</span>
+
+<span class="c">// Load .env with dotenv package</span>
+<span class="k">require</span>(<span class="s">"dotenv"</span>).<span class="f">config</span>();
+<span class="k">const</span> apiKey = process.env.API_KEY;`
+ }],
+ callout:'<strong>Day-one rule:</strong> When joining a new project, the first thing you do is run "pip install -r requirements.txt" or "npm install". This reproduces the exact environment everyone else uses. Never skip this step.',
+ interview:'What is semantic versioning (semver) and what does the ^ symbol mean in package.json?',
+ interviewA:'"^1.6.0" means accept any version >=1.6.0 and <2.0.0. Semver uses MAJOR.MINOR.PATCH: major = breaking changes, minor = new features (backwards compatible), patch = bug fixes only.',
+ exercise:{q:'Describe the steps to set up a brand new Python project that:\n1. Uses a virtual environment\n2. Installs the "requests" library\n3. Saves the dependency so teammates can reproduce it\n4. Stores an API key securely',a:'1. python -m venv venv\n2. source venv/bin/activate  (Mac/Linux)\n3. pip install requests python-dotenv\n4. pip freeze > requirements.txt\n5. Create .env file: API_KEY=your_key_here\n6. Add .env to .gitignore\n7. In code:\n   from dotenv import load_dotenv\n   import os, requests\n   load_dotenv()\n   key = os.environ.get("API_KEY")\n\nTeammate setup:\n   git clone <repo>\n   python -m venv venv\n   source venv/bin/activate\n   pip install -r requirements.txt\n   # Create their own .env file'}
+},
+/* ─── 11. TESTING ─── */
+{id:'m11',title:'Testing & Debugging',level:'inter',area:'Testing',dots:4,
+ intro:'Untested code is broken code — you just haven\'t found the bug yet. Every professional dev role requires you to write tests. Testing is also the #1 way to debug effectively: write a test that reproduces the bug, fix it, confirm the test passes.',
+ lessons:[{
+   head:'Unit testing — testing one function at a time',
+   body:'A unit test checks that a single function produces the right output for a given input. The AAA pattern: <strong>Arrange</strong> (set up), <strong>Act</strong> (call function), <strong>Assert</strong> (check result).',
+   py:`<span class="k">import</span> pytest
+
+<span class="c"># The function we are testing</span>
+<span class="k">def</span> <span class="f">calculate_discount</span>(price, pct=<span class="n">10</span>):
+    <span class="k">if</span> price < <span class="n">0</span>: <span class="k">raise</span> ValueError(<span class="s">"Price cannot be negative"</span>)
+    <span class="k">return</span> <span class="f">round</span>(price * (<span class="n">1</span> - pct/<span class="n">100</span>), <span class="n">2</span>)
+
+<span class="c"># Test file: test_discount.py</span>
+<span class="k">def</span> <span class="f">test_basic_discount</span>():
+    <span class="c"># Arrange</span>
+    price, pct = <span class="n">100</span>, <span class="n">10</span>
+    <span class="c"># Act</span>
+    result = <span class="f">calculate_discount</span>(price, pct)
+    <span class="c"># Assert</span>
+    <span class="k">assert</span> result == <span class="n">90.0</span>
+
+<span class="k">def</span> <span class="f">test_zero_discount</span>():
+    <span class="k">assert</span> <span class="f">calculate_discount</span>(<span class="n">100</span>, <span class="n">0</span>) == <span class="n">100.0</span>
+
+<span class="k">def</span> <span class="f">test_negative_price_raises</span>():
+    <span class="k">with</span> pytest.<span class="f">raises</span>(ValueError):
+        <span class="f">calculate_discount</span>(-<span class="n">50</span>)
+
+<span class="c">## Run with: pytest test_discount.py -v</span>`,
+   js:`<span class="c">// The function we are testing</span>
+<span class="k">function</span> <span class="f">calculateDiscount</span>(price, pct = <span class="n">10</span>) {
+    <span class="k">if</span> (price < <span class="n">0</span>) <span class="k">throw new</span> Error(<span class="s">"Price cannot be negative"</span>);
+    <span class="k">return</span> <span class="f">parseFloat</span>((price * (<span class="n">1</span> - pct/<span class="n">100</span>)).<span class="f">toFixed</span>(<span class="n">2</span>));
+}
+
+<span class="c">// Test file: discount.test.js (Jest)</span>
+<span class="f">describe</span>(<span class="s">"calculateDiscount"</span>, () => {
+
+    <span class="f">test</span>(<span class="s">"applies 10% discount"</span>, () => {
+        <span class="c">// Arrange + Act + Assert</span>
+        <span class="f">expect</span>(<span class="f">calculateDiscount</span>(<span class="n">100</span>, <span class="n">10</span>)).<span class="f">toBe</span>(<span class="n">90</span>);
+    });
+
+    <span class="f">test</span>(<span class="s">"zero discount returns full price"</span>, () => {
+        <span class="f">expect</span>(<span class="f">calculateDiscount</span>(<span class="n">100</span>, <span class="n">0</span>)).<span class="f">toBe</span>(<span class="n">100</span>);
+    });
+
+    <span class="f">test</span>(<span class="s">"throws on negative price"</span>, () => {
+        <span class="f">expect</span>(() => <span class="f">calculateDiscount</span>(-<span class="n">50</span>)).<span class="f">toThrow</span>(<span class="s">"negative"</span>);
+    });
+});
+<span class="c">// Run with: npx jest</span>`
+ },{
+   head:'Debugging strategies — finding bugs systematically',
+   body:'Debugging is a skill. The fastest debuggers follow a process: reproduce → isolate → fix → verify. Use logging strategically, not randomly.',
+   py:`<span class="k">import</span> logging
+
+<span class="c"># Set up structured logging (do this once at top of file)</span>
+logging.<span class="f">basicConfig</span>(
+    level=logging.DEBUG,
+    format=<span class="s">"%(asctime)s [%(levelname)s] %(message)s"</span>
+)
+logger = logging.<span class="f">getLogger</span>(__name__)
+
+<span class="k">def</span> <span class="f">process_payment</span>(order_id, amount):
+    logger.<span class="f">debug</span>(<span class="s">f"Processing payment: order=</span>{order_id}<span class="s"> amount=</span>{amount}<span class="s">"</span>)
+    <span class="k">try</span>:
+        <span class="c"># ... payment logic ...</span>
+        logger.<span class="f">info</span>(<span class="s">f"Payment successful: order=</span>{order_id}<span class="s">"</span>)
+        <span class="k">return</span> {<span class="s">"status"</span>: <span class="s">"ok"</span>}
+    <span class="k">except</span> Exception <span class="k">as</span> e:
+        logger.<span class="f">error</span>(<span class="s">f"Payment failed: order=</span>{order_id}<span class="s"> error=</span>{e}<span class="s">"</span>, exc_info=<span class="k">True</span>)
+        <span class="k">return</span> {<span class="s">"status"</span>: <span class="s">"error"</span>}`,
+   js:`<span class="c">// Structured logging with levels</span>
+<span class="k">const</span> log = {
+    debug: (msg, data={}) => console.<span class="f">debug</span>(<span class="s">\`[DEBUG] \${msg}\`</span>, data),
+    info:  (msg, data={}) => console.<span class="f">info</span> (<span class="s">\`[INFO]  \${msg}\`</span>, data),
+    error: (msg, data={}) => console.<span class="f">error</span>(<span class="s">\`[ERROR] \${msg}\`</span>, data),
+};
+
+<span class="k">async function</span> <span class="f">processPayment</span>(orderId, amount) {
+    log.<span class="f">debug</span>(<span class="s">"Processing payment"</span>, { orderId, amount });
+    <span class="k">try</span> {
+        <span class="c">// ... payment logic ...</span>
+        log.<span class="f">info</span>(<span class="s">"Payment successful"</span>, { orderId });
+        <span class="k">return</span> { status: <span class="s">"ok"</span> };
+    } <span class="k">catch</span> (err) {
+        log.<span class="f">error</span>(<span class="s">"Payment failed"</span>, { orderId, error: err.message });
+        <span class="k">return</span> { status: <span class="s">"error"</span> };
+    }
+}`
+ }],
+ callout:'<strong>Debugging process (use this every time):</strong><br>1. <strong>Reproduce</strong> the bug with a minimal example<br>2. <strong>Read</strong> the error message carefully — the last line usually tells you exactly what happened<br>3. <strong>Log</strong> input values just before the failing line<br>4. <strong>Fix</strong> one thing at a time<br>5. <strong>Write a test</strong> that confirms the fix and prevents regression',
+ interview:'What is the difference between unit tests and integration tests?',
+ interviewA:'Unit tests test a single function in isolation (fast, no external dependencies). Integration tests test how multiple parts work together — including real databases or APIs (slower, more realistic). Both are needed.',
+ exercise:{q:'Write 3 unit tests for a function "formatCurrency(amount, currency)" that formats a number as a currency string.\nE.g. formatCurrency(9.99, "USD") → "$9.99"',a:'Python (pytest):\ndef format_currency(amount, currency="USD"):\n    symbols = {"USD": "$", "GBP": "£", "EUR": "€"}\n    symbol = symbols.get(currency, currency)\n    return f"{symbol}{amount:.2f}"\n\ndef test_usd_format():\n    assert format_currency(9.99, "USD") == "$9.99"\n\ndef test_gbp_format():\n    assert format_currency(100, "GBP") == "£100.00"\n\ndef test_unknown_currency_uses_code():\n    assert format_currency(5.5, "JPY") == "JPY5.50"\n\nNode.js (Jest):\nfunction formatCurrency(amount, currency = "USD") {\n    const symbols = { USD: "$", GBP: "£", EUR: "€" };\n    const sym = symbols[currency] ?? currency;\n    return `${sym}${amount.toFixed(2)}`;\n}\n\ntest("formats USD", () => expect(formatCurrency(9.99, "USD")).toBe("$9.99"));\ntest("formats GBP", () => expect(formatCurrency(100, "GBP")).toBe("£100.00"));\ntest("unknown currency uses code", () => expect(formatCurrency(5.5, "JPY")).toBe("JPY5.50"));'}
+}
+];
+
+/* ════════════════════════════════════════════════════════════
+   AUTOMATION PATTERNS
+════════════════════════════════════════════════════════════ */
+const PATTERNS=[
+{id:'p1',title:'Data Transformation',complexity:'intermediate',
+ desc:'Receive a raw payload and reshape it into the format downstream systems expect.',use:'Normalising e-commerce webhook data before inserting into a database.',
+ py:`<span class="k">def</span> <span class="f">transform_order</span>(raw):
+    <span class="k">try</span>:
+        total = <span class="f">sum</span>(
+            item[<span class="s">"qty"</span>] * item[<span class="s">"price"</span>]
+            <span class="k">for</span> item <span class="k">in</span> raw.get(<span class="s">"lineItems"</span>, [])
+        )
+        <span class="k">return</span> {
+            <span class="s">"id"</span>:    raw[<span class="s">"orderId"</span>],
+            <span class="s">"email"</span>: raw[<span class="s">"customerEmail"</span>].<span class="f">strip</span>().<span class="f">lower</span>(),
+            <span class="s">"total"</span>: <span class="f">round</span>(total, <span class="n">2</span>),
+            <span class="s">"items"</span>: <span class="f">len</span>(raw.get(<span class="s">"lineItems"</span>, []))
+        }
+    <span class="k">except</span> KeyError <span class="k">as</span> e:
+        <span class="k">return</span> {<span class="s">"error"</span>: <span class="s">f"Missing field: </span>{e}<span class="s">"</span>}`,
+ js:`<span class="k">function</span> <span class="f">transformOrder</span>(raw) {
+    <span class="k">try</span> {
+        <span class="k">const</span> items = raw.lineItems || [];
+        <span class="k">const</span> total = items.<span class="f">reduce</span>(
+            (s, i) => s + i.qty * i.price, <span class="n">0</span>
+        );
+        <span class="k">return</span> {
+            id:    raw.orderId,
+            email: raw.customerEmail.<span class="f">trim</span>().<span class="f">toLowerCase</span>(),
+            total: <span class="f">parseFloat</span>(total.<span class="f">toFixed</span>(<span class="n">2</span>)),
+            items: items.length
+        };
+    } <span class="k">catch</span> (err) {
+        <span class="k">return</span> { error: err.message };
+    }
+}`},
+{id:'p2',title:'Conditional Routing',complexity:'beginner',
+ desc:'Read a field from the incoming payload and return a routing key for the next workflow branch.',use:'Routing support tickets to different teams based on priority and customer tier.',
+ py:`<span class="k">def</span> <span class="f">get_route</span>(ticket):
+    priority = ticket.get(<span class="s">"priority"</span>, <span class="s">"low"</span>).<span class="f">lower</span>()
+    tier     = ticket.get(<span class="s">"tier"</span>, <span class="s">"standard"</span>)
+    <span class="k">if</span> priority == <span class="s">"critical"</span> <span class="k">or</span> tier == <span class="s">"enterprise"</span>:
+        <span class="k">return</span> <span class="s">"escalate"</span>
+    <span class="k">elif</span> priority == <span class="s">"high"</span>:
+        <span class="k">return</span> <span class="s">"senior"</span>
+    <span class="k">return</span> <span class="s">"queue"</span>`,
+ js:`<span class="k">function</span> <span class="f">getRoute</span>(ticket) {
+    <span class="k">const</span> p = (ticket.priority || <span class="s">"low"</span>).<span class="f">toLowerCase</span>();
+    <span class="k">const</span> t = ticket.tier || <span class="s">"standard"</span>;
+    <span class="k">if</span> (p === <span class="s">"critical"</span> || t === <span class="s">"enterprise"</span>) <span class="k">return</span> <span class="s">"escalate"</span>;
+    <span class="k">if</span> (p === <span class="s">"high"</span>) <span class="k">return</span> <span class="s">"senior"</span>;
+    <span class="k">return</span> <span class="s">"queue"</span>;
+}`},
+{id:'p3',title:'API Handling',complexity:'intermediate',
+ desc:'Call an external API, validate the response, and return clean structured data.',use:'Fetching customer data from a CRM to enrich an incoming order.',
+ py:`<span class="k">async def</span> <span class="f">fetch_customer</span>(cid, api_key):
+    <span class="k">try</span>:
+        headers = {<span class="s">"Authorization"</span>: <span class="s">f"Bearer </span>{api_key}<span class="s">"</span>}
+        <span class="c"># resp = await session.get(f"/customers/{cid}", headers=headers)</span>
+        <span class="k">if</span> resp.status != <span class="n">200</span>:
+            <span class="k">raise</span> ValueError(<span class="s">f"HTTP </span>{resp.status}<span class="s">"</span>)
+        data = <span class="k">await</span> resp.<span class="f">json</span>()
+        <span class="k">return</span> {<span class="s">"name"</span>: data[<span class="s">"full_name"</span>],
+                <span class="s">"tier"</span>: data.get(<span class="s">"tier"</span>, <span class="s">"standard"</span>)}
+    <span class="k">except</span> Exception <span class="k">as</span> e:
+        <span class="f">print</span>(<span class="s">f"CRM error: </span>{e}<span class="s">"</span>); <span class="k">return</span> <span class="k">None</span>`,
+ js:`<span class="k">async function</span> <span class="f">fetchCustomer</span>(cid, apiKey) {
+    <span class="k">try</span> {
+        <span class="k">const</span> res = <span class="k">await</span> <span class="f">fetch</span>(<span class="s">\`/customers/\${cid}\`</span>, {
+            headers: { Authorization: <span class="s">\`Bearer \${apiKey}\`</span> }
+        });
+        <span class="k">if</span> (!res.ok) <span class="k">throw new</span> Error(<span class="s">\`HTTP \${res.status}\`</span>);
+        <span class="k">const</span> d = <span class="k">await</span> res.<span class="f">json</span>();
+        <span class="k">return</span> { name: d.full_name, tier: d.tier || <span class="s">"standard"</span> };
+    } <span class="k">catch</span> (err) {
+        console.<span class="f">error</span>(<span class="s">"CRM error:"</span>, err.message); <span class="k">return</span> <span class="k">null</span>;
+    }
+}`},
+{id:'p4',title:'File Processing',complexity:'intermediate',
+ desc:'Parse a CSV or JSON file payload and extract validated records for downstream processing.',use:'Importing product records from a CSV uploaded via a form trigger.',
+ py:`<span class="k">import</span> csv, io
+
+<span class="k">def</span> <span class="f">parse_csv</span>(csv_string):
+    <span class="k">try</span>:
+        reader = csv.<span class="f">DictReader</span>(io.<span class="f">StringIO</span>(csv_string))
+        records = []
+        <span class="k">for</span> row <span class="k">in</span> reader:
+            price = <span class="f">float</span>(row.get(<span class="s">"price"</span>, <span class="n">0</span>))
+            <span class="k">if</span> price > <span class="n">0</span>:
+                records.<span class="f">append</span>({
+                    <span class="s">"sku"</span>: row[<span class="s">"sku"</span>].<span class="f">strip</span>(),
+                    <span class="s">"price"</span>: price
+                })
+        <span class="k">return</span> records
+    <span class="k">except</span> Exception <span class="k">as</span> e:
+        <span class="f">print</span>(<span class="s">f"CSV error: </span>{e}<span class="s">"</span>); <span class="k">return</span> []`,
+ js:`<span class="k">function</span> <span class="f">parseCsv</span>(csvStr) {
+    <span class="k">try</span> {
+        <span class="k">const</span> [hdrLine, ...rows] = csvStr.<span class="f">trim</span>().<span class="f">split</span>(<span class="s">"\\n"</span>);
+        <span class="k">const</span> hdrs = hdrLine.<span class="f">split</span>(<span class="s">","</span>).<span class="f">map</span>(h => h.<span class="f">trim</span>());
+        <span class="k">return</span> rows.<span class="f">map</span>(r => {
+            <span class="k">const</span> v = r.<span class="f">split</span>(<span class="s">","</span>);
+            <span class="k">return</span> Object.<span class="f">fromEntries</span>(hdrs.<span class="f">map</span>((h,i) => [h, v[i]?.<span class="f">trim</span>()]));
+        }).<span class="f">filter</span>(r => <span class="f">parseFloat</span>(r.price) > <span class="n">0</span>);
+    } <span class="k">catch</span> (err) {
+        console.<span class="f">error</span>(err.message); <span class="k">return</span> [];
+    }
+}`},
+{id:'p5',title:'Event-Based Execution',complexity:'advanced',
+ desc:'Process a webhook event payload, validate its structure, and return a clean action object.',use:'Handling Stripe events to update order status in your database.',
+ py:`<span class="k">def</span> <span class="f">handle_event</span>(event):
+    <span class="k">try</span>:
+        etype = event.get(<span class="s">"type"</span>)
+        obj   = event.get(<span class="s">"data"</span>, {}).get(<span class="s">"object"</span>, {})
+        <span class="k">if</span> etype == <span class="s">"payment_intent.succeeded"</span>:
+            <span class="k">return</span> {<span class="s">"action"</span>: <span class="s">"mark_paid"</span>,
+                    <span class="s">"amount"</span>: obj.get(<span class="s">"amount"</span>, <span class="n">0</span>) / <span class="n">100</span>}
+        <span class="k">elif</span> etype == <span class="s">"payment_intent.payment_failed"</span>:
+            <span class="k">return</span> {<span class="s">"action"</span>: <span class="s">"notify_failure"</span>}
+        <span class="k">return</span> {<span class="s">"action"</span>: <span class="s">"ignore"</span>}
+    <span class="k">except</span> Exception <span class="k">as</span> e:
+        <span class="k">return</span> {<span class="s">"action"</span>: <span class="s">"error"</span>, <span class="s">"msg"</span>: <span class="f">str</span>(e)}`,
+ js:`<span class="k">function</span> <span class="f">handleEvent</span>(event) {
+    <span class="k">try</span> {
+        <span class="k">const</span> obj = event?.data?.object || {};
+        <span class="k">switch</span> (event.type) {
+            <span class="k">case</span> <span class="s">"payment_intent.succeeded"</span>:
+                <span class="k">return</span> { action: <span class="s">"mark_paid"</span>,
+                         amount: (obj.amount||<span class="n">0</span>)/<span class="n">100</span> };
+            <span class="k">case</span> <span class="s">"payment_intent.payment_failed"</span>:
+                <span class="k">return</span> { action: <span class="s">"notify_failure"</span> };
+            <span class="k">default</span>:
+                <span class="k">return</span> { action: <span class="s">"ignore"</span> };
+        }
+    } <span class="k">catch</span> (err) {
+        <span class="k">return</span> { action: <span class="s">"error"</span>, msg: err.message };
+    }
+}`},
+{id:'p6',title:'Retry / Fallback',complexity:'advanced',
+ desc:'Retry a failing operation with exponential backoff before giving up and returning a fallback.',use:'Reliably calling a rate-limited API without crashing the workflow.',
+ py:`<span class="k">import</span> asyncio
+
+<span class="k">async def</span> <span class="f">retry</span>(fn, max=<span class="n">3</span>, delay=<span class="n">1</span>):
+    <span class="k">for</span> attempt <span class="k">in</span> <span class="f">range</span>(max):
+        <span class="k">try</span>:
+            <span class="k">return await</span> <span class="f">fn</span>()
+        <span class="k">except</span> Exception <span class="k">as</span> e:
+            wait = delay * (<span class="n">2</span> ** attempt)
+            <span class="f">print</span>(<span class="s">f"Attempt </span>{attempt+<span class="n">1</span>}<span class="s"> failed. Wait </span>{wait}<span class="s">s"</span>)
+            <span class="k">if</span> attempt == max - <span class="n">1</span>: <span class="k">return</span> <span class="k">None</span>
+            <span class="k">await</span> asyncio.<span class="f">sleep</span>(wait)`,
+ js:`<span class="k">async function</span> <span class="f">retry</span>(fn, max=<span class="n">3</span>, delay=<span class="n">1000</span>) {
+    <span class="k">for</span> (<span class="k">let</span> i=<span class="n">0</span>; i<max; i++) {
+        <span class="k">try</span> { <span class="k">return await</span> <span class="f">fn</span>(); }
+        <span class="k">catch</span> (e) {
+            <span class="k">const</span> wait = delay * <span class="n">2</span>**i;
+            console.<span class="f">warn</span>(<span class="s">\`Attempt \${i+1} failed. Wait \${wait}ms\`</span>);
+            <span class="k">if</span> (i===max-<span class="n">1</span>) <span class="k">return null</span>;
+            <span class="k">await new</span> <span class="f">Promise</span>(r=><span class="f">setTimeout</span>(r,wait));
+        }
+    }
+}`}
+];
+
+/* ════════════════════════════════════════════════════════════
+   EXERCISES (8 total — interview-style)
+════════════════════════════════════════════════════════════ */
+const EXERCISES=[
+{id:'e1',q:'Write a function "flattenArray(arr)" that takes a nested array like [[1,2],[3,[4,5]]] and returns a flat array [1,2,3,4,5].',
+ a:'Python:\ndef flatten_array(arr):\n    result = []\n    for item in arr:\n        if isinstance(item, list):\n            result.extend(flatten_array(item))\n        else:\n            result.append(item)\n    return result\n\nprint(flatten_array([[1,2],[3,[4,5]]]))  # [1,2,3,4,5]\n\nNode.js:\nfunction flattenArray(arr) {\n    return arr.flat(Infinity);  // built-in\n    // or manually:\n    // return arr.reduce((acc, item) => \n    //     acc.concat(Array.isArray(item) ? flattenArray(item) : item), []);\n}'},
+{id:'e2',q:'Given an array of user objects with "name" and "age", write a function that returns the names of all users aged 18 or over, sorted alphabetically.',
+ a:'Python:\ndef adult_names(users):\n    return sorted([u["name"] for u in users if u["age"] >= 18])\n\nusers = [{"name":"Charlie","age":17},{"name":"Alice","age":25},{"name":"Bob","age":18}]\nprint(adult_names(users))  # ["Alice", "Bob"]\n\nNode.js:\nfunction adultNames(users) {\n    return users\n        .filter(u => u.age >= 18)\n        .map(u => u.name)\n        .sort();\n}'},
+{id:'e3',q:'Write a class "Stack" with push(item), pop(), peek() (returns top without removing), and isEmpty() methods.',
+ a:'Python:\nclass Stack:\n    def __init__(self):\n        self._items = []\n    def push(self, item):\n        self._items.append(item)\n    def pop(self):\n        if self.is_empty(): raise IndexError("Stack is empty")\n        return self._items.pop()\n    def peek(self):\n        if self.is_empty(): raise IndexError("Stack is empty")\n        return self._items[-1]\n    def is_empty(self):\n        return len(self._items) == 0\n\nNode.js:\nclass Stack {\n    constructor() { this._items = []; }\n    push(item) { this._items.push(item); }\n    pop() {\n        if (this.isEmpty()) throw new Error("Stack is empty");\n        return this._items.pop();\n    }\n    peek() {\n        if (this.isEmpty()) throw new Error("Stack is empty");\n        return this._items[this._items.length - 1];\n    }\n    isEmpty() { return this._items.length === 0; }\n}'},
+{id:'e4',q:'Write a function "debounce(fn, ms)" that returns a new function which only executes fn after ms milliseconds have passed without it being called again. (Classic interview question in Node.js)',
+ a:'Node.js:\nfunction debounce(fn, ms) {\n    let timer;\n    return function(...args) {\n        clearTimeout(timer);\n        timer = setTimeout(() => fn.apply(this, args), ms);\n    };\n}\n\n// Usage:\nconst handleInput = debounce((val) => console.log("Searching:", val), 300);\n// Only fires 300ms after last keystroke\n\nPython equivalent:\nimport threading\ndef debounce(fn, seconds):\n    timer = None\n    def debounced(*args, **kwargs):\n        nonlocal timer\n        if timer: timer.cancel()\n        timer = threading.Timer(seconds, fn, args, kwargs)\n        timer.start()\n    return debounced'},
+{id:'e5',q:'Write a function that reads environment variables for DB_HOST, DB_PORT, DB_NAME and returns a connection string. Throw an error if any are missing.',
+ a:'Python:\nimport os\n\ndef get_db_connection_string():\n    required = ["DB_HOST", "DB_PORT", "DB_NAME"]\n    missing = [k for k in required if not os.environ.get(k)]\n    if missing:\n        raise EnvironmentError(f"Missing env vars: {missing}")\n    host = os.environ["DB_HOST"]\n    port = os.environ["DB_PORT"]\n    name = os.environ["DB_NAME"]\n    return f"postgresql://{host}:{port}/{name}"\n\nNode.js:\nfunction getDbConnectionString() {\n    const required = ["DB_HOST", "DB_PORT", "DB_NAME"];\n    const missing = required.filter(k => !process.env[k]);\n    if (missing.length) throw new Error(`Missing env vars: ${missing}`);\n    const { DB_HOST, DB_PORT, DB_NAME } = process.env;\n    return `postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}`;\n}'},
+{id:'e6',q:'Write unit tests for a "Stack" class (from exercise 3). Write tests for: push + peek, pop, isEmpty, and the error case when popping an empty stack.',
+ a:'Python (pytest):\ndef test_push_and_peek():\n    s = Stack()\n    s.push(1)\n    s.push(2)\n    assert s.peek() == 2  # top, not removed\n\ndef test_pop_removes_top():\n    s = Stack()\n    s.push(1); s.push(2)\n    assert s.pop() == 2\n    assert s.peek() == 1\n\ndef test_is_empty():\n    s = Stack()\n    assert s.is_empty() == True\n    s.push("x")\n    assert s.is_empty() == False\n\ndef test_pop_empty_raises():\n    s = Stack()\n    with pytest.raises(IndexError):\n        s.pop()\n\nNode.js (Jest):\ndescribe("Stack", () => {\n    test("push and peek", () => {\n        const s = new Stack();\n        s.push(1); s.push(2);\n        expect(s.peek()).toBe(2);\n    });\n    test("pop", () => {\n        const s = new Stack();\n        s.push(1); s.push(2);\n        expect(s.pop()).toBe(2);\n        expect(s.peek()).toBe(1);\n    });\n    test("isEmpty", () => {\n        const s = new Stack();\n        expect(s.isEmpty()).toBe(true);\n        s.push("x");\n        expect(s.isEmpty()).toBe(false);\n    });\n    test("pop empty throws", () => {\n        expect(() => new Stack().pop()).toThrow();\n    });\n});'},
+{id:'e7',q:'Write an async function "fetchUserWithPosts(userId)" that fetches a user AND their posts in parallel (not sequentially), then returns {user, posts}.',
+ a:'Node.js:\nasync function fetchUserWithPosts(userId) {\n    try {\n        const [userRes, postsRes] = await Promise.all([\n            fetch(`/users/${userId}`),\n            fetch(`/users/${userId}/posts`)\n        ]);\n        if (!userRes.ok || !postsRes.ok) throw new Error("Fetch failed");\n        const [user, posts] = await Promise.all([\n            userRes.json(),\n            postsRes.json()\n        ]);\n        return { user, posts };\n    } catch (err) {\n        console.error(err.message);\n        return null;\n    }\n}\n\nPython (asyncio):\nasync def fetch_user_with_posts(user_id):\n    try:\n        user_task  = fetch_user(user_id)   # async fn\n        posts_task = fetch_posts(user_id)  # async fn\n        user, posts = await asyncio.gather(user_task, posts_task)\n        return {"user": user, "posts": posts}\n    except Exception as e:\n        print(f"Error: {e}")\n        return None'},
+{id:'e8',q:'INTERVIEW CHALLENGE: Write a function "memoize(fn)" that caches the results of a function so repeated calls with the same argument return instantly from cache.',
+ a:'Python:\ndef memoize(fn):\n    cache = {}\n    def memoized(*args):\n        if args not in cache:\n            cache[args] = fn(*args)\n        return cache[args]\n    return memoized\n\n# Usage:\n@memoize\ndef slow_square(n):\n    return n * n  # imagine this takes 1 second\n\nslow_square(5)  # computes\nslow_square(5)  # returns from cache instantly\n\nNode.js:\nfunction memoize(fn) {\n    const cache = new Map();\n    return function(...args) {\n        const key = JSON.stringify(args);\n        if (!cache.has(key)) {\n            cache.set(key, fn.apply(this, args));\n        }\n        return cache.get(key);\n    };\n}\n\n// Python also has a built-in: @functools.lru_cache(maxsize=None)'}
+];
+
+/* ════════════════════════════════════════════════════════════
+   SKILL TABLE (30 total)
+════════════════════════════════════════════════════════════ */
+const SKILL_TABLE=[
+  ...MODULES.map(m=>({id:m.id,name:m.title,area:m.area})),
+  ...PATTERNS.map(p=>({id:p.id,name:p.title,area:'Patterns'})),
+  ...EXERCISES.map((e,i)=>({id:e.id,name:`Exercise ${i+1}`,area:'Practice'}))
+].slice(0,30);
+
+/* ════════════════════════════════════════════════════════════
+   STORAGE
+════════════════════════════════════════════════════════════ */
+function ld(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch{return d;}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+let S={m:ld('spg3_m',{}),p:ld('spg3_p',{}),e:ld('spg3_e',{}),n:ld('spg3_n',[])};
+
+/* ════════════════════════════════════════════════════════════
+   PROGRESS
+════════════════════════════════════════════════════════════ */
+function cp(){let d=0;SKILL_TABLE.forEach(s=>{if(S.m[s.id]||S.p[s.id]||S.e[s.id])d++;});return{d,t:SKILL_TABLE.length};}
+function ui(){
+  const{d,t}=cp();const pct=t>0?Math.round(d/t*100):0;
+  ['gPct','lPct'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=pct+'%';});
+  ['gBar','lBar'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.width=pct+'%';});
+  const gd=document.getElementById('gDone');if(gd)gd.textContent=d;
+  const gt=document.getElementById('gTotal');if(gt)gt.textContent=t;
+  const ld2=document.getElementById('lDone');if(ld2)ld2.textContent=d;
+}
+
+/* ════════════════════════════════════════════════════════════
+   CODE BLOCK RENDER
+════════════════════════════════════════════════════════════ */
+function cb(html){return`<div class="cb">${html}</div>`;}
+
+/* ════════════════════════════════════════════════════════════
+   RENDER LESSONS
+════════════════════════════════════════════════════════════ */
+function renderLessons(){
+  const c=document.getElementById('lessonSec');
+  c.innerHTML=`<div class="sec__hd"><span class="sec__title">All Modules</span><span class="sec__sub">${MODULES.length} modules</span></div>`;
+  MODULES.forEach((mod,mi)=>{
+    const mastered=!!S.m[mod.id];
+    const dots=Array.from({length:5},(_,di)=>`<div class="sd${di<mod.dots?' on':''}"></div>`).join('');
+    const wrap=document.createElement('div');
+    if(mi<MODULES.length-1)wrap.style.borderBottom='1px solid var(--n800)';
+    let inner=`<p style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);line-height:1.75;margin-bottom:var(--s2);">${mod.intro}</p>`;
+    mod.lessons.forEach(les=>{
+      const pid=`py${mod.id}${mi}${les.head.replace(/\W/g,'')}`;
+      const jid=`js${mod.id}${mi}${les.head.replace(/\W/g,'')}`;
+      inner+=`<h4 style="font-family:var(--fd);font-size:var(--md);font-weight:700;color:var(--tp);margin:var(--s2) 0 var(--s1);">${les.head}</h4>
+        <p style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);line-height:1.75;margin-bottom:var(--s1);">${les.body}</p>
+        <div class="ltabs"><button class="ltab active" data-t="${pid}">Python</button><button class="ltab" data-t="${jid}">Node.js</button></div>
+        <div id="${pid}" class="lpanel active">${cb(les.py)}</div>
+        <div id="${jid}" class="lpanel">${cb(les.js)}</div>`;
+    });
+    if(mod.callout) inner+=`<div class="callout"><p>${mod.callout}</p></div>`;
+    if(mod.interview) inner+=`<div class="interview"><div class="interview__label">Interview Question</div><div class="interview__q">"${mod.interview}"</div><button class="btn btn-r" style="min-height:32px;" data-ia="${mod.id}">Reveal Model Answer</button><div class="ex__reveal" id="ia${mod.id}"><p style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);margin-top:var(--s1);line-height:1.75;">${mod.interviewA}</p></div></div>`;
+    if(mod.exercise) inner+=`<div class="ex"><div class="ex__lbl">Hands-on Exercise</div><div class="ex__q">${mod.exercise.q.replace(/\n/g,'<br>')}</div><div class="fg1"><button class="btn btn-r" data-er="${mod.id}">Reveal Answer</button></div><div class="ex__reveal" id="er${mod.id}"><div class="ex__albl">Answer</div>${cb(mod.exercise.a.replace(/\n/g,'<br>').replace(/ /g,'&nbsp;'))}</div></div>`;
+    wrap.innerHTML=`
+      <button class="ct" aria-expanded="false" aria-controls="cb${mod.id}">
+        <span style="display:flex;align-items:center;gap:var(--s1);">
+          <span style="font-family:var(--fd);font-size:var(--md);font-weight:600;">${mod.title}</span>
+          <span class="tag" style="font-size:8px;padding:2px 7px;background:var(--n800);color:var(--n400);border-color:var(--n700);">${mod.area}</span>
+          ${mastered?'<span class="badge">✓</span>':''}
+        </span>
+        <svg class="chv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="cbody" id="cb${mod.id}">
+        <div class="ccontent">
+          ${inner}
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s3);padding-top:var(--s2);border-top:1px solid var(--border);">
+            <div><p style="font-family:var(--fm);font-size:var(--xs);color:var(--td);margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em;">Mastery</p><div class="sdots">${dots}</div></div>
+            <label style="display:flex;align-items:center;gap:var(--s1);cursor:pointer;">
+              <span style="font-family:var(--fm);font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--td);">Mark Complete</span>
+              <button class="tog${mastered?' on':''}" role="switch" aria-checked="${mastered}" data-mid="${mod.id}"></button>
+            </label>
+          </div>
+        </div>
+      </div>`;
+    c.appendChild(wrap);
+  });
+  // Events
+  c.querySelectorAll('.ct').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const b=document.getElementById(btn.getAttribute('aria-controls'));
+      const o=b.classList.toggle('open');btn.classList.toggle('open',o);btn.setAttribute('aria-expanded',o);
+    });
+  });
+  c.querySelectorAll('.ltab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      const t=tab.dataset.t;
+      const group=tab.closest('.ccontent')||tab.closest('.pat-item');
+      if(!group)return;
+      group.querySelectorAll('.ltab').forEach(x=>{
+        x.classList.toggle('active',x.dataset.t===t);
+        const p=document.getElementById(x.dataset.t);if(p)p.classList.toggle('active',x.dataset.t===t);
+      });
+    });
+  });
+  c.querySelectorAll('[data-er],[data-ia]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const id='er'+(btn.dataset.er||'')||'ia'+(btn.dataset.ia||'');
+      const key=btn.dataset.er?'er':'ia';
+      const el=document.getElementById(key+(btn.dataset.er||btn.dataset.ia));
+      if(el){el.classList.toggle('open');btn.textContent=el.classList.contains('open')?'Hide':'Reveal '+(key==='ia'?'Model Answer':'Answer');}
+    });
+  });
+  c.querySelectorAll('.tog[data-mid]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const mid=btn.dataset.mid;S.m[mid]=!S.m[mid];sv('spg3_m',S.m);
+      btn.classList.toggle('on',S.m[mid]);btn.setAttribute('aria-checked',S.m[mid]);
+      const trigger=btn.closest('.cbody').previousElementSibling;
+      const eb=trigger.querySelector('.badge');
+      if(S.m[mid]&&!eb){const b=document.createElement('span');b.className='badge';b.textContent='✓';trigger.querySelector('span>span').insertAdjacentElement('afterend',b);}
+      else if(!S.m[mid]&&eb)eb.remove();
+      ui();renderLog();
+    });
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   RENDER PATTERNS
+════════════════════════════════════════════════════════════ */
+function renderPatterns(){
+  const c=document.getElementById('patSec');
+  c.innerHTML=`<div class="sec__hd"><span class="sec__title">Pattern Library</span><span class="sec__sub">6 patterns</span></div>`;
+  PATTERNS.forEach(pat=>{
+    const cc={beginner:'tb',intermediate:'ti',advanced:'ta'}[pat.complexity]||'';
+    const pid=`py_${pat.id}`,jid=`js_${pat.id}`;
+    const div=document.createElement('div');div.className='pat-item';
+    div.innerHTML=`
+      <div class="pat-row" style="margin-bottom:6px;"><span style="font-family:var(--fd);font-size:var(--md);font-weight:700;color:var(--tp);flex:1;">${pat.title}</span><span class="tag ${cc}">${pat.complexity}</span></div>
+      <p style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);margin-bottom:4px;">${pat.desc}</p>
+      <p style="font-family:var(--fm);font-size:var(--xs);color:var(--td);padding-left:var(--s1);border-left:2px solid var(--n700);margin-bottom:var(--s2);">Use: ${pat.use}</p>
+      <div class="ltabs"><button class="ltab active" data-t="${pid}">Python</button><button class="ltab" data-t="${jid}">Node.js</button></div>
+      <div id="${pid}" class="lpanel active">${cb(pat.py)}</div>
+      <div id="${jid}" class="lpanel">${cb(pat.js)}</div>
+      <div class="se">
+        <input type="checkbox" id="pc${pat.id}" ${S.p[pat.id]?'checked':''} data-pid="${pat.id}" aria-label="Mark understood">
+        <label for="pc${pat.id}">I can write this pattern from memory</label>
+      </div>`;
+    c.appendChild(div);
+  });
+  c.querySelectorAll('.ltab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      const t=tab.dataset.t;
+      const g=tab.closest('.pat-item');
+      g.querySelectorAll('.ltab').forEach(x=>{
+        x.classList.toggle('active',x.dataset.t===t);
+        const p=document.getElementById(x.dataset.t);if(p)p.classList.toggle('active',x.dataset.t===t);
+      });
+    });
+  });
+  c.querySelectorAll('input[data-pid]').forEach(cb=>{
+    cb.addEventListener('change',()=>{S.p[cb.dataset.pid]=cb.checked;sv('spg3_p',S.p);ui();renderLog();});
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   RENDER EXERCISES
+════════════════════════════════════════════════════════════ */
+function renderExercises(){
+  const c=document.getElementById('exSec');
+  EXERCISES.forEach((ex,i)=>{
+    const done=!!S.e[ex.id];
+    const div=document.createElement('div');
+    div.style.cssText='border-bottom:1px solid var(--n800);padding:var(--s2) 0;';
+    if(i===EXERCISES.length-1)div.style.borderBottom='none';
+    div.innerHTML=`
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:var(--s1);margin-bottom:var(--s1);">
+        <div class="ex__lbl">Challenge ${i+1}${i===EXERCISES.length-1?' — Interview Level':''}</div>
+        ${done?'<span class="tag tb" style="font-size:8px;">Done</span>':''}
+      </div>
+      <div class="ex__q">${ex.q.replace(/\n/g,'<br>')}</div>
+      <div style="display:flex;align-items:center;gap:var(--s1);flex-wrap:wrap;margin-top:var(--s1);">
+        <button class="btn btn-r" data-rev="${ex.id}">Reveal Answer</button>
+        <label class="check-inline">
+          <input type="checkbox" ${done?'checked':''} data-eid="${ex.id}">
+          Mark complete
+        </label>
+      </div>
+      <div class="ex__reveal" id="rev${ex.id}">
+        <div class="ex__albl">Answer</div>
+        ${cb(ex.a.replace(/\n/g,'<br>').replace(/ /g,'&nbsp;'))}
+      </div>`;
+    c.appendChild(div);
+  });
+  c.querySelectorAll('[data-rev]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const el=document.getElementById('rev'+btn.dataset.rev);
+      if(el){el.classList.toggle('open');btn.textContent=el.classList.contains('open')?'Hide Answer':'Reveal Answer';}
+    });
+  });
+  c.querySelectorAll('input[data-eid]').forEach(cb=>{
+    cb.addEventListener('change',()=>{S.e[cb.dataset.eid]=cb.checked;sv('spg3_e',S.e);ui();renderLog();});
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   VALIDATE
+════════════════════════════════════════════════════════════ */
+document.getElementById('valBtn').addEventListener('click',()=>{
+  const code=document.getElementById('codeIn').value.trim();
+  const lang=document.getElementById('langSel').value;
+  const out=document.getElementById('outBox');
+  if(!code){out.className='out err';out.textContent='✖  No code provided.';return;}
+  const checks=[
+    [/def |class |function |=>|const |let /.test(code),'Function or class declaration'],
+    [/try|catch|except/.test(code),'Error handling'],
+    [/return /.test(code),'Return value present'],
+    [/\w+\s*=\s*/.test(code),'Variable assignment'],
+  ];
+  let sc=0;const fb=checks.map(([pass,label])=>{if(pass)sc++;return(pass?'✓':'○')+'  '+label;});
+  const lines=code.split('\n').length;
+  fb.push(`ℹ  ${lines} line${lines!==1?'s':''}`);
+  out.className=sc>=3?'out ok':'out';
+  out.textContent=`[${new Date().toLocaleTimeString()}] ${lang==='python'?'Python':'Node.js'}\n${'─'.repeat(36)}\n${fb.join('\n')}\n\nSCORE  ${sc}/4  —  ${sc>=3?'Solid structure!':sc>=2?'Getting there — add error handling':'Keep building — add a function, try/catch, and return'}`;
+});
+document.getElementById('clrBtn').addEventListener('click',()=>{
+  document.getElementById('codeIn').value='';
+  const o=document.getElementById('outBox');o.className='out';o.textContent='// Output will appear here…';
+});
+
+/* ════════════════════════════════════════════════════════════
+   LOG GRID
+════════════════════════════════════════════════════════════ */
+function renderLog(){
+  const grid=document.getElementById('logGrid');
+  grid.querySelectorAll('.lgr').forEach(r=>r.remove());
+  SKILL_TABLE.forEach((skill,i)=>{
+    const done=!!(S.m[skill.id]||S.p[skill.id]||S.e[skill.id]);
+    const cells=[
+      Object.assign(document.createElement('span'),{textContent:String(i+1).padStart(2,'0'),style:'font-family:var(--fm);font-size:var(--xs);color:var(--n600);'}),
+      Object.assign(document.createElement('span'),{textContent:skill.name,style:'font-family:var(--fm);font-size:var(--xs);color:var(--ts);'}),
+      Object.assign(document.createElement('span'),{innerHTML:`<span style="font-family:var(--fm);font-size:8px;color:var(--td);">${skill.area}</span>`}),
+      Object.assign(document.createElement('span'),{innerHTML:done?'<span style="color:var(--n300);">✓</span>':'<span style="color:var(--n700);">○</span>',style:'text-align:center;'})
+    ];
+    cells.forEach(el=>{el.classList.add('lgr');grid.appendChild(el);});
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   NOTES
+════════════════════════════════════════════════════════════ */
+function renderNotes(){
+  const c=document.getElementById('savedNotes');c.innerHTML='';
+  S.n.slice().reverse().forEach(n=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--n850);border:1px solid var(--n750);border-radius:var(--rmd);padding:var(--s2);';
+    d.innerHTML=`<p style="font-family:var(--fm);font-size:var(--xs);color:var(--n500);margin-bottom:4px;">${n.ts}</p><p style="font-family:var(--fm);font-size:var(--sm);color:var(--ts);white-space:pre-wrap;">${n.t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>`;
+    c.appendChild(d);
+  });
+}
+document.getElementById('saveNote').addEventListener('click',()=>{
+  const inp=document.getElementById('noteIn');const t=inp.value.trim();if(!t)return;
+  S.n.push({t,ts:new Date().toLocaleString()});sv('spg3_n',S.n);inp.value='';renderNotes();
+});
+
+/* ════════════════════════════════════════════════════════════
+   RESET
+════════════════════════════════════════════════════════════ */
+document.getElementById('resetBtn').addEventListener('click',()=>document.getElementById('resetModal').classList.add('open'));
+document.getElementById('mCancel').addEventListener('click',()=>document.getElementById('resetModal').classList.remove('open'));
+document.getElementById('mConfirm').addEventListener('click',()=>{
+  S={m:{},p:{},e:{},n:[]};['spg3_m','spg3_p','spg3_e','spg3_n'].forEach(k=>localStorage.removeItem(k));
+  document.getElementById('resetModal').classList.remove('open');
+  renderLessons();renderPatterns();renderExercises();renderLog();renderNotes();ui();
+});
+
+/* ════════════════════════════════════════════════════════════
+   NAV
+════════════════════════════════════════════════════════════ */
+document.querySelectorAll('.ni').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const t=item.dataset.page;
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+t).classList.add('active');
+    document.querySelectorAll('.ni').forEach(n=>{n.classList.remove('active');n.removeAttribute('aria-current');});
+    item.classList.add('active');item.setAttribute('aria-current','page');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ════════════════════════════════════════════════════════════
+   PWA
+════════════════════════════════════════════════════════════ */
+(function(){
+  const m={name:'Scripting: Proficiency Guide',short_name:'Script Guide',start_url:'/',display:'standalone',background_color:'#050d1a',theme_color:'#050d1a',icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23091424'/%3E%3Ctext y='70' x='12' font-size='54' fill='%236090d0' font-family='monospace'%3E%3C/%3E%3C/svg%3E",sizes:'512x512',type:'image/svg+xml'}]};
+  document.getElementById('manifest-link').href=URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/json'}));
+  if('serviceWorker' in navigator){
+    const sw=`const C='spg4';self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['/'])));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>new Response('<html><body style="background:#050d1a;color:#6090d0;font-family:monospace;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;"><p>⊘ Offline</p></body></html>',{headers:{'Content-Type':'text/html'}}))));});`;
+    navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{});
+  }
+})();
+
+/* ════════════════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════════════════ */
+renderLessons();
+renderPatterns();
+renderExercises();
+renderLog();
+renderNotes();
+ui();
+</script>
+</body>
+</html>
